@@ -7,38 +7,65 @@
         <field name="sequence">7</field>
     </record>
 
-    
-      <record id="group_employee_restricted_access_menu" model="res.groups">
-        <field name="name">Menu Access for HR</field>
-        <field name="category_id" ref="hr_rule_based_access.employee_own_module"/>
-    </record>
-
-
+  #attendances for Employees and Manager enterprisre
     <record id="group_employee_own_record_access" model="res.groups">
+
         <field name="name">Employees</field>
-        <field name="category_id" ref="hr_rule_based_access.employee_own_module"/>
+        <field name="category_id" ref="base.module_category_human_resources_attendances"/>
     </record>
 
-    <record id="right_dev_employee_own_manager" model="res.groups">
+    <record id="group_manager_record_access" model="res.groups">
         <field name="name">Manager</field>
-        <field name="category_id" ref="hr_rule_based_access.employee_own_module"/>
+        <field name="category_id" ref="base.module_category_human_resources_attendances"/>
     </record>
 
-    <record id="right_hr" model="res.groups">
-        <field name="name">HR</field>
-        <field name="category_id" ref="hr_rule_based_access.employee_own_module"/>
+    #Contract for Employee name  enterprisre
+    <record id="group_hr_contract_employee" model="res.groups">
+            <field name="name">Employee</field>
+            <field name="category_id" ref="base.module_category_human_resources_contracts"/>
     </record>
 
-    <record id="right_manager_ceo" model="res.groups">
-        <field name="name">Admin/CEO</field>
-        <field name="category_id" ref="hr_rule_based_access.employee_own_module"/>
+    #Contract for Employees  enterprisre
+    <record id="group_hr_employee" model="res.groups">
+        <field name="name">Employee</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+    </record>
+
+     <record id="group_hr_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+    </record>
+
+    #time_off  for Employees  enterprisre
+    <record id="group_time_off_employee" model="res.groups">
+        <field name="name">Employees</field>
+        <field name="category_id" ref="base.module_category_human_resources_time_off"/>
+    </record>
+
+    <record id="group_time_off_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="base.module_category_human_resources_time_off"/>
     </record>
 
 
-    <record id="group_employee_restricted_access_menu" model="res.groups">
-        <field name="name">Menu Access for HR</field>
-        <field name="category_id" ref="hr_rule_based_access.employee_own_module"/>
+    #hr_attendance  for Employees  enterprisre
+    <record id="group_human_resources_attendances_employee" model="res.groups">
+        <field name="name">Employees</field>
+        <field name="category_id" ref="base.module_category_human_resources_attendances"/>
     </record>
+
+    <record id="group_human_resources_attendances_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="base.module_category_human_resources_attendances"/>
+    </record>
+
+
+
+
+<!--    <record id="group_employee_restricted_access_menu" model="res.groups">-->
+<!--        <field name="name">Menu Access for HR</field>-->
+<!--        <field name="category_id" ref="hr_rule_based_access.employee_own_module"/>-->
+<!--    </record>-->
 
     <!--    Menu Hide -->
 <!--    <menuitem-->
@@ -150,265 +177,265 @@
 
 
 <!--     hr.model_hr_employee-->
-    <record id="rule_employee_own_record" model="ir.rule">
-        <field name="name">User: Own Employee Record</field>
-        <field name="model_id" ref="hr.model_hr_employee"/>
-        <field name="domain_force">[('user_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--    <record id="rule_employee_own_record" model="ir.rule">-->
+<!--        <field name="name">User: Own Employee Record</field>-->
+<!--        <field name="model_id" ref="hr.model_hr_employee"/>-->
+<!--        <field name="domain_force">[('user_id', '=', user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-    <record id="rule_employee_own_department" model="ir.rule">
-        <field name="name">Manager: Own department</field>
-        <field name="model_id" ref="hr.model_hr_employee"/>
-        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>
-<!--         <field name="domain_force">[('department_id', '=', user.department_id.id )]</field>-->
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--    <record id="rule_employee_own_department" model="ir.rule">-->
+<!--        <field name="name">Manager: Own department</field>-->
+<!--        <field name="model_id" ref="hr.model_hr_employee"/>-->
+<!--        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>-->
+<!--&lt;!&ndash;         <field name="domain_force">[('department_id', '=', user.department_id.id )]</field>&ndash;&gt;-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-    <record id="rule_hr_admin" model="ir.rule">
-        <field name="name">HR/CEO: all access</field>
-        <field name="model_id" ref="hr.model_hr_employee"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups"
-               eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
-
-
-<!--     hr_contract.model_hr_contract-->
-    <record id="rule_employee_contract_own" model="ir.rule">
-        <field name="name">User: Own contract</field>
-        <field name="model_id" ref="hr_contract.model_hr_contract"/>
-         <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
-
-    <record id="rule_manager_own_department" model="ir.rule">
-        <field name="name">Manager: Own department Contracts</field>
-        <field name="model_id" ref="hr_contract.model_hr_contract"/>
-        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>
-<!--        <field name="domain_force">[('employee_id.department_id', '=', user.employee_id.department_id.id)]</field>-->
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
-
-    <record id="rule_contract_hr_admin" model="ir.rule">
-        <field name="name">HR/CEO: all contract access</field>
-        <field name="model_id" ref="hr_contract.model_hr_contract"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--    <record id="rule_hr_admin" model="ir.rule">-->
+<!--        <field name="name">HR/CEO: all access</field>-->
+<!--        <field name="model_id" ref="hr.model_hr_employee"/>-->
+<!--        <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--        <field name="groups"-->
+<!--               eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
 
-<!--     hr_attendance.model_hr_attendance-->
-    <record id="rule_employee_attendance_own" model="ir.rule">
-        <field name="name">User: Own Attendance</field>
-        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--&lt;!&ndash;     hr_contract.model_hr_contract&ndash;&gt;-->
+<!--    <record id="rule_employee_contract_own" model="ir.rule">-->
+<!--        <field name="name">User: Own contract</field>-->
+<!--        <field name="model_id" ref="hr_contract.model_hr_contract"/>-->
+<!--         <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-    <record id="rule_manager_attendance_own" model="ir.rule">
-        <field name="name">Manager: manager own department attendance</field>
-        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
-        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>
-<!--        <field name="domain_force">[('employee_id.department_id', '=', user.employee_id.department_id.id)]</field>-->
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--    <record id="rule_manager_own_department" model="ir.rule">-->
+<!--        <field name="name">Manager: Own department Contracts</field>-->
+<!--        <field name="model_id" ref="hr_contract.model_hr_contract"/>-->
+<!--        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>-->
+<!--&lt;!&ndash;        <field name="domain_force">[('employee_id.department_id', '=', user.employee_id.department_id.id)]</field>&ndash;&gt;-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-
-    <record id="rule_attendance_hr_admin" model="ir.rule">
-        <field name="name">HR/CEO: all attendance access</field>
-        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups"
-               eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--    <record id="rule_contract_hr_admin" model="ir.rule">-->
+<!--        <field name="name">HR/CEO: all contract access</field>-->
+<!--        <field name="model_id" ref="hr_contract.model_hr_contract"/>-->
+<!--        <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
 
-<!--     hr_holidays.model_hr_leave-->
-    <record id="rule_employee_leave_own" model="ir.rule">
-        <field name="name">User: Own Leaves</field>
-        <field name="model_id" ref="hr_holidays.model_hr_leave"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--&lt;!&ndash;     hr_attendance.model_hr_attendance&ndash;&gt;-->
+<!--    <record id="rule_employee_attendance_own" model="ir.rule">-->
+<!--        <field name="name">User: Own Attendance</field>-->
+<!--        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>-->
+<!--        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-    <record id="rule_manager_leave_own" model="ir.rule">
-        <field name="name">Manager: Own manger Leaves</field>
-        <field name="model_id" ref="hr_holidays.model_hr_leave"/>
-        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
-
-
-
-    <record id="rule_leave_hr_admin" model="ir.rule">
-        <field name="name">HR/CEO: all leave access</field>
-        <field name="model_id" ref="hr_holidays.model_hr_leave"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--    <record id="rule_manager_attendance_own" model="ir.rule">-->
+<!--        <field name="name">Manager: manager own department attendance</field>-->
+<!--        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>-->
+<!--        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>-->
+<!--&lt;!&ndash;        <field name="domain_force">[('employee_id.department_id', '=', user.employee_id.department_id.id)]</field>&ndash;&gt;-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
 
-<!--     hr_holidays.model_hr_leave_allocation-->
-    <record id="rule_employee_leave_allocation_own" model="ir.rule">
-        <field name="name">User: Own Leave Allocations</field>
-        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--    <record id="rule_attendance_hr_admin" model="ir.rule">-->
+<!--        <field name="name">HR/CEO: all attendance access</field>-->
+<!--        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>-->
+<!--        <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--        <field name="groups"-->
+<!--               eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-        <record id="rule_manager_leave_allocation" model="ir.rule">
-        <field name="name">Manager: Own manger Leaves</field>
-        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
-        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
 
-     <record id="rule_leave_allocation_hr_admin" model="ir.rule">
-        <field name="name">HR/CEO: all leave access</field>
-        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--&lt;!&ndash;     hr_holidays.model_hr_leave&ndash;&gt;-->
+<!--    <record id="rule_employee_leave_own" model="ir.rule">-->
+<!--        <field name="name">User: Own Leaves</field>-->
+<!--        <field name="model_id" ref="hr_holidays.model_hr_leave"/>-->
+<!--        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
+
+<!--    <record id="rule_manager_leave_own" model="ir.rule">-->
+<!--        <field name="name">Manager: Own manger Leaves</field>-->
+<!--        <field name="model_id" ref="hr_holidays.model_hr_leave"/>-->
+<!--        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
 
 
-    <!--  hr_payroll.model_hr_payslip -->
-
-    <record id="view_hr_payslip_form_readonly" model="ir.ui.view">
-        <field name="name">Payslip Form Read-Only</field>
-        <field name="model">hr.payslip</field>
-        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="/form" position="attributes">
-                <attribute name="edit">false</attribute>
-                <attribute name="create">false</attribute>
-                <attribute name="delete">false</attribute>
-            </xpath>
-        </field>
-    </record>
+<!--    <record id="rule_leave_hr_admin" model="ir.rule">-->
+<!--        <field name="name">HR/CEO: all leave access</field>-->
+<!--        <field name="model_id" ref="hr_holidays.model_hr_leave"/>-->
+<!--        <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
 
-    <record id="rule_manager_payslip_own" model="ir.rule">
-        <field name="name">User: Own Payroll</field>
-        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--&lt;!&ndash;     hr_holidays.model_hr_leave_allocation&ndash;&gt;-->
+<!--    <record id="rule_employee_leave_allocation_own" model="ir.rule">-->
+<!--        <field name="name">User: Own Leave Allocations</field>-->
+<!--        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>-->
+<!--        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-    <record id="rule_employee_payslip_own" model="ir.rule">
-        <field name="name">Manager: Own manager Payroll</field>
-        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
-         <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--        <record id="rule_manager_leave_allocation" model="ir.rule">-->
+<!--        <field name="name">Manager: Own manger Leaves</field>-->
+<!--        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>-->
+<!--        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-    <record id="rule_payroll_hr_admin" model="ir.rule">
-        <field name="name">HR/CEO: all payroll access</field>
-        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--     <record id="rule_leave_allocation_hr_admin" model="ir.rule">-->
+<!--        <field name="name">HR/CEO: all leave access</field>-->
+<!--        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>-->
+<!--        <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
 
 
+<!--    &lt;!&ndash;  hr_payroll.model_hr_payslip &ndash;&gt;-->
+
+<!--    <record id="view_hr_payslip_form_readonly" model="ir.ui.view">-->
+<!--        <field name="name">Payslip Form Read-Only</field>-->
+<!--        <field name="model">hr.payslip</field>-->
+<!--        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="/form" position="attributes">-->
+<!--                <attribute name="edit">false</attribute>-->
+<!--                <attribute name="create">false</attribute>-->
+<!--                <attribute name="delete">false</attribute>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
 
 
-<!--       hr_appraisal.model_hr_appraisal-->
+<!--    <record id="rule_manager_payslip_own" model="ir.rule">-->
+<!--        <field name="name">User: Own Payroll</field>-->
+<!--        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>-->
+<!--        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-    <record id="rule_employee_own_appraisal" model="ir.rule">
-        <field name="name">User: Own Employee appraisal</field>
-        <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--    <record id="rule_employee_payslip_own" model="ir.rule">-->
+<!--        <field name="name">Manager: Own manager Payroll</field>-->
+<!--        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>-->
+<!--         <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
-    <record id="rule_employee_own_appraisal" model="ir.rule">
-        <field name="name">Manager: Own department appraisal</field>
-        <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>
-        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
+<!--    <record id="rule_payroll_hr_admin" model="ir.rule">-->
+<!--        <field name="name">HR/CEO: all payroll access</field>-->
+<!--        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>-->
+<!--        <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
+
+
+
+
+
+<!--&lt;!&ndash;       hr_appraisal.model_hr_appraisal&ndash;&gt;-->
+
+<!--    <record id="rule_employee_own_appraisal" model="ir.rule">-->
+<!--        <field name="name">User: Own Employee appraisal</field>-->
+<!--        <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>-->
+<!--        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
+
+<!--    <record id="rule_employee_own_appraisal" model="ir.rule">-->
+<!--        <field name="name">Manager: Own department appraisal</field>-->
+<!--        <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>-->
+<!--        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
 
 
