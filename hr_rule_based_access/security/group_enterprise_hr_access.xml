@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Group for Employee Access to Own Records in Attendance -->
-        <record id="group_employee_own_attendance_access" model="res.groups">
-            <field name="name">Employee - Own Attendance</field>
-            <field name="category_id" ref="base.module_category_human_resources_attendances"/>
-        </record>
+<!--        &lt;!&ndash; Group for Employee Access to Own Records in Attendance &ndash;&gt;-->
+<!--        <record id="group_employee_own_attendance_access" model="res.groups">-->
+<!--            <field name="name">Employee - Own Attendance</field>-->
+<!--            <field name="category_id" ref="base.module_category_human_resources_attendances"/>-->
+<!--        </record>-->
 
         <!-- Group for Manager Access to Own Team Records in Attendance -->
         <record id="group_manager_team_attendance_access" model="res.groups">
@@ -44,9 +44,9 @@
         </record>
 
         <!-- Record Rule: Managers can only see their own team's time off requests -->
-        <record id="manager_team_time_off_rule" model="ir.rule">
+        <record id="group_manager_team_time_off" model="res.groups">
             <field name="name">Manager - Team Time Off</field>
-            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="category_id" ref="base.module_category_human_resources_time_off"/>
         </record>
 
         <!-- Group for Employee Access to Own Attendance Records -->
@@ -66,17 +66,17 @@
         <!-- Record Rule: Employees can only see their own attendance records -->
         <record id="employee_own_attendance_rule" model="ir.rule">
             <field name="name">Employee - Own Attendance</field>
-            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
             <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-            <field name="groups" eval="[(4, ref('group_employee_own_attendance_access'))]"/>
+            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_attendance_access'))]"/>
         </record>
 
         <!-- Record Rule: Managers can only see their team's attendance records -->
         <record id="manager_team_attendance_rule" model="ir.rule">
             <field name="name">Manager - Team Attendance</field>
-            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
             <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>
-            <field name="groups" eval="[(4, ref('group_manager_team_attendance_access'))]"/>
+            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_manager_team_attendance_access'))]"/>
         </record>
 
         <!-- Record Rule: Employees can only see their own contract records -->
@@ -92,7 +92,7 @@
             <field name="name">Manager - Team Contract</field>
             <field name="model_id" ref="hr_contract.model_hr_contract"/>
             <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>
-            <field name="groups" eval="[(4, ref('group_manager_team_attendance_access'))]"/>
+            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_manager_team_attendance_access'))]"/>
         </record>
 
         <!-- Record Rule: Employees can only see their own HR records -->
@@ -126,23 +126,23 @@
             <field name="name">Manager - Team Time Off</field>
             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
             <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>
-            <field name="groups" eval="[(4, ref('group_manager_team_time_off_access'))]"/>
+            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_manager_team_time_off'))]"/>
         </record>
 
         <!-- Record Rule: Employees can only see their own attendance records -->
         <record id="employee_own_attendance_access_rule" model="ir.rule">
             <field name="name">Employee - Own Attendance</field>
-            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
             <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-            <field name="groups" eval="[(4, ref('group_employee_own_attendance_access'))]"/>
+            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_attendance_access'))]"/>
         </record>
 
         <!-- Record Rule: Managers can only see their own team's attendance records -->
         <record id="manager_team_attendance_access_rule" model="ir.rule">
             <field name="name">Manager - Own Team Attendance Access</field>
-            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
             <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>
-            <field name="groups" eval="[(4, ref('group_manager_team_attendance_access'))]"/>
+            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_manager_team_attendance_access'))]"/>
         </record>
 
         <!-- Record Rule: Employees can only see their own contract records -->
@@ -150,16 +150,16 @@
             <field name="name">Employee - Own Contract</field>
             <field name="model_id" ref="hr_contract.model_hr_contract"/>
             <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-            <field name="groups" eval="[(4, ref('group_employee_own_contract_access'))]"/>
+            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_contract_access'))]"/>
         </record>
 
-        <!-- Record Rule: Managers can only see their team's contract records -->
-        <record id="manager_team_contract_rule" model="ir.rule">
-            <field name="name">Manager - Team Contract</field>
-            <field name="model_id" ref="hr_contract.model_hr_contract"/>
-            <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>
-            <field name="groups" eval="[(4, ref('group_manager_team_contract_access'))]"/>
-        </record>
+<!--        &lt;!&ndash; Record Rule: Managers can only see their team's contract records &ndash;&gt;-->
+<!--        <record id="manager_team_contract_rule" model="ir.rule">-->
+<!--            <field name="name">Manager - Team Contract</field>-->
+<!--            <field name="model_id" ref="hr_contract.model_hr_contract"/>-->
+<!--            <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_manager_team_contract_access'))]"/>-->
+<!--        </record>-->
 
         <!-- Record Rule: Managers can only see their team's HR records -->
         <record id="manager_team_employee_record_rule" model="ir.rule">
@@ -168,10 +168,10 @@
             <field name="domain_force">['|', ('user_id', '=', user.id), ('department_id.manager_id.user_id', '=',
                 user.id)]
             </field>
-            <field name="groups" eval="[(4, ref('group_manager_team_employee_record_access'))]"/>
+            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_hr_manager'))]"/>
         </record>
 
-        a
+
 
 
     </data>
