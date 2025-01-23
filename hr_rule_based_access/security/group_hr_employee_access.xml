@@ -383,39 +383,6 @@
     </record>
 
 
-<!--       claim_management.model_claim_management-->
-    <record id="rule_employee_own_claim" model="ir.rule">
-        <field name="name">User: Own Employee Claim</field>
-        <field name="model_id" ref="claim_management.model_claim_management"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_record_access'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
-
-    <record id="rule_manager_own_claim" model="ir.rule">
-        <field name="name">Manager: Own department claim</field>
-        <field name="model_id" ref="claim_management.model_claim_management"/>
-        <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="perm_read" eval="1"/>
-    </record>
-
-    <record id="rule_claim_hr_admin" model="ir.rule">
-        <field name="name">HR/CEO: all claim access</field>
-        <field name="model_id" ref="claim_management.model_claim_management"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
 
 
 
