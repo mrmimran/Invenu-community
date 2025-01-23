@@ -17,7 +17,7 @@
     'category': 'Human Resources',
     'version': '0.1',
 
-     'depends': ['base','hr','hr_contract','hr_holidays','hr_attendance','hr_appraisal',],
+     'depends': ['base','hr','hr_contract','hr_holidays','hr_attendance','hr_appraisal', ],
 
     'data': [
         # 'security/ir.model.access.csv',  # Access control definitions

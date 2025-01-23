@@ -10,7 +10,7 @@
         <!-- Record Rule: Employees can only see their own attendance records -->
         <record id="employee_own_attendance_rule" model="ir.rule">
             <field name="name">Employee - Own Attendance</field>
-            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
             <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('group_employee_own_attendance_access'))]"/>
         </record>
@@ -24,7 +24,7 @@
         <!-- Record Rule: Managers can only see their own team's attendance records -->
         <record id="manager_team_attendance_rule" model="ir.rule">
             <field name="name">Manager - Own Team Attendance</field>
-            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
             <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('group_manager_team_attendance_access'))]"/>
         </record>
@@ -64,7 +64,7 @@
         <!-- Record Rule: Employees can only see their own time off requests -->
         <record id="employee_own_time_off_rule" model="ir.rule">
             <field name="name">Employee - Own Time Off</field>
-            <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
             <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('group_employee_own_time_off_access'))]"/>
         </record>
@@ -78,7 +78,7 @@
         <!-- Record Rule: Managers can only see their own team's time off requests -->
         <record id="manager_team_time_off_rule" model="ir.rule">
             <field name="name">Manager - Own Team Time Off</field>
-            <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
             <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('group_manager_team_time_off_access'))]"/>
         </record>
@@ -92,7 +92,7 @@
         <!-- Record Rule: Employees can only see their own attendance records -->
         <record id="employee_own_attendance_access_rule" model="ir.rule">
             <field name="name">Employee - Own Attendance Access</field>
-            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
             <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('group_employee_own_attendance_access'))]"/>
         </record>
@@ -106,7 +106,7 @@
         <!-- Record Rule: Managers can only see their team's attendance records -->
         <record id="manager_team_attendance_access_rule" model="ir.rule">
             <field name="name">Manager - Team Attendance Access</field>
-            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
             <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('group_manager_team_attendance_access'))]"/>
         </record>
@@ -135,8 +135,7 @@
         <record id="manager_own_team_record_access_rule" model="ir.rule">
             <field name="name">Manager - Own Team HR Record Access</field>
             <field name="model_id" ref="hr.model_hr_employee"/>
-            <field name="domain_force">[('user_id', '=', user.id) OR ('department_id.manager_id.user_id', '=',
-                user.id)]
+            <field name="domain_force">['|', ('user_id', '=', user.id), ('department_id.manager_id.user_id', '=', user.id)]
             </field>
             <field name="groups" eval="[(4, ref('group_manager_own_team_record_access'))]"/>
         </record>
