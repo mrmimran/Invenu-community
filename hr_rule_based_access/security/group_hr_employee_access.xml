@@ -41,112 +41,112 @@
     </record>
 
     <!--    Menu Hide -->
-    <menuitem
-            id="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
-            name="Configuration"
-            parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
-            sequence="100"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
+<!--    <menuitem-->
+<!--            id="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"-->
+<!--            name="Configuration"-->
+<!--            parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"-->
+<!--            sequence="100"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
 
-    <menuitem
-            id="hr_work_entry_contract_enterprise.menu_hr_payroll_employees_root"
-            name="Contracts"
-            parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
-            sequence="50"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
-
-
-    <menuitem
-            id="hr_attendance.menu_hr_attendance_settings"
-            name="Configuration"
-            parent="hr_attendance.menu_hr_attendance_root"
-            sequence="99"
-            action="hr_attendance.action_hr_attendance_settings"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
-
-    <menuitem
-            name="Configuration"
-            id="hr_appraisal.menu_hr_appraisal_configuration"
-            parent="hr_appraisal.menu_hr_appraisal_root"
-            sequence="99"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
-
-    <menuitem name="Goals"
-              parent="hr_appraisal.menu_hr_appraisal_root"
-              id="hr_appraisal.menu_hr_appraisal_goal"
-              action="hr_appraisal.action_hr_appraisal_goal"
-              sequence="2"
-              groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
+<!--    <menuitem-->
+<!--            id="hr_work_entry_contract_enterprise.menu_hr_payroll_employees_root"-->
+<!--            name="Contracts"-->
+<!--            parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"-->
+<!--            sequence="50"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
 
 
+<!--    <menuitem-->
+<!--            id="hr_attendance.menu_hr_attendance_settings"-->
+<!--            name="Configuration"-->
+<!--            parent="hr_attendance.menu_hr_attendance_root"-->
+<!--            sequence="99"-->
+<!--            action="hr_attendance.action_hr_attendance_settings"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
+
+<!--    <menuitem-->
+<!--            name="Configuration"-->
+<!--            id="hr_appraisal.menu_hr_appraisal_configuration"-->
+<!--            parent="hr_appraisal.menu_hr_appraisal_root"-->
+<!--            sequence="99"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
+
+<!--    <menuitem name="Goals"-->
+<!--              parent="hr_appraisal.menu_hr_appraisal_root"-->
+<!--              id="hr_appraisal.menu_hr_appraisal_goal"-->
+<!--              action="hr_appraisal.action_hr_appraisal_goal"-->
+<!--              sequence="2"-->
+<!--              groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
 
 
 
-    <menuitem
-            id="hr_appraisal.menu_hr_appraisal_report"
-            parent="hr_appraisal.menu_hr_appraisal_root"
-            sequence="20"
-            name="Reporting"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
 
 
-    <menuitem
-            id="hr.menu_human_resources_configuration"
-            name="Configuration"
-            parent="hr.menu_hr_root"
-            sequence="100"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
+<!--    <menuitem-->
+<!--            id="hr_appraisal.menu_hr_appraisal_report"-->
+<!--            parent="hr_appraisal.menu_hr_appraisal_root"-->
+<!--            sequence="20"-->
+<!--            name="Reporting"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
 
 
-    <menuitem
-            id="hr.hr_menu_hr_reports"
-            name="Reporting"
-            parent="hr.menu_hr_root"
-            sequence="95"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
-
-    <menuitem
-            id="hr.menu_hr_department_kanban"
-            action="hr.hr_department_kanban_action"
-            parent="hr.menu_hr_root"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
+<!--    <menuitem-->
+<!--            id="hr.menu_human_resources_configuration"-->
+<!--            name="Configuration"-->
+<!--            parent="hr.menu_hr_root"-->
+<!--            sequence="100"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
 
 
-    <menuitem
-            id="hr_holidays.menu_hr_holidays_configuration"
-            name="Configuration"
-            parent="hr_holidays.menu_hr_holidays_root"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"
-            sequence="5"/>
+<!--    <menuitem-->
+<!--            id="hr.hr_menu_hr_reports"-->
+<!--            name="Reporting"-->
+<!--            parent="hr.menu_hr_root"-->
+<!--            sequence="95"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
 
-        <menuitem
-                id="base.menu_management"
-                name="Apps"
-                sequence="500"
-                web_icon="base,static/description/modules.png"
-                groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
+<!--    <menuitem-->
+<!--            id="hr.menu_hr_department_kanban"-->
+<!--            action="hr.hr_department_kanban_action"-->
+<!--            parent="hr.menu_hr_root"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
 
-    <menuitem
-            id="visitor_management_system.visitor_management_menu_root"
-            name="Visitor"
-            sequence="8"
-            web_icon="visitor_management_system,static/description/icon1.png"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
 
-    <menuitem
-            id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root"
-            name="Dashboards"
-            action="spreadsheet_dashboard.ir_actions_dashboard_action"
-            web_icon="spreadsheet_dashboard,static/description/icon.png"
-            sequence="37"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
+<!--    <menuitem-->
+<!--            id="hr_holidays.menu_hr_holidays_configuration"-->
+<!--            name="Configuration"-->
+<!--            parent="hr_holidays.menu_hr_holidays_root"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"-->
+<!--            sequence="5"/>-->
 
-    <menuitem
-            id="utm.menu_link_tracker_root"
-            name="Link Tracker"
-            sequence="270"
-            web_icon="utm,static/description/icon.png"
-            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>
+<!--        <menuitem-->
+<!--                id="base.menu_management"-->
+<!--                name="Apps"-->
+<!--                sequence="500"-->
+<!--                web_icon="base,static/description/modules.png"-->
+<!--                groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
+
+<!--    <menuitem-->
+<!--            id="visitor_management_system.visitor_management_menu_root"-->
+<!--            name="Visitor"-->
+<!--            sequence="8"-->
+<!--            web_icon="visitor_management_system,static/description/icon1.png"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
+
+<!--    <menuitem-->
+<!--            id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root"-->
+<!--            name="Dashboards"-->
+<!--            action="spreadsheet_dashboard.ir_actions_dashboard_action"-->
+<!--            web_icon="spreadsheet_dashboard,static/description/icon.png"-->
+<!--            sequence="37"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
+
+<!--    <menuitem-->
+<!--            id="utm.menu_link_tracker_root"-->
+<!--            name="Link Tracker"-->
+<!--            sequence="270"-->
+<!--            web_icon="utm,static/description/icon.png"-->
+<!--            groups="hr_rule_based_access.group_employee_restricted_access_menu"/>-->
 
 
 <!--     hr.model_hr_employee-->
@@ -437,17 +437,6 @@
         <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>
         <field name="domain_force">[("department_id.manager_id.user_id", "=", user.id)]</field>
         <field name="groups" eval="[(4, ref('hr_rule_based_access.right_dev_employee_own_manager'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
-
-    <record id="rule_appraisal_hr_admin" model="ir.rule">
-        <field name="name">HR/CEO: all claim access</field>
-        <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('hr_rule_based_access.right_hr')), (4, ref('hr_rule_based_access.right_manager_ceo'))]"/>
         <field name="perm_create" eval="1"/>
         <field name="perm_write" eval="1"/>
         <field name="perm_unlink" eval="1"/>
