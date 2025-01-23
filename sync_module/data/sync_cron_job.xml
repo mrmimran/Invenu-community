@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <!-- Define a new cron job -->
+        <record id="cron_synchronization_job" model="ir.cron">
+            <field name="name">Synchronization Cron</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="True"/>
+            <field name="model_id" ref="model_sync_module"/>
+            <field name="code">model.run_synchronization_enterprise_community()</field>
+            <field name="user_id" ref="base.user_root"/>
+
+        </record>
+
+    </data>
+</odoo>
