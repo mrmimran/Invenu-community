@@ -1,11 +1,11 @@
 <odoo>
 
 
-    <record model="ir.module.category" id="employee_own_module">
-        <field name="name">Employee Rights</field>
-        <field name="description">Rights For Employee Payroll, HR, Leaves, Timeoff, Attendance, Contract, Appraisl</field>
-        <field name="sequence">7</field>
-    </record>
+<!--    <record model="ir.module.category" id="employee_own_module">-->
+<!--        <field name="name">Employee Rights</field>-->
+<!--        <field name="description">Rights For Employee Payroll, HR, Leaves, Timeoff, Attendance, Contract, Appraisl</field>-->
+<!--        <field name="sequence">7</field>-->
+<!--    </record>-->
 
   #attendances for Employees and Manager enterprisre
     <record id="group_employee_own_record_access" model="res.groups">

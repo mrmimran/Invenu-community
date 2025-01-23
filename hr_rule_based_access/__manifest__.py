@@ -24,7 +24,8 @@
         # 'views/security_group_views.xml', # Views for security groups
         # 'views/security_rule_views.xml',  # Views for security rules
         # 'views/hr_contract_views.xml',     # HR contract views with access control
-        'security/group_hr_employee_access.xml',
+        # 'security/group_hr_employee_access.xml',
+        'security/group_enterprise_hr_access.xml',
 
 
     ],
