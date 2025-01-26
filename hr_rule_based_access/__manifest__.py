@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "hr_rule_based_access",
+    'name': "HR Rule Based Access",
 
     'summary': "Manage access control for HR records based on roles",
 

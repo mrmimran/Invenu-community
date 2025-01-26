@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-<!--        &lt;!&ndash; Group for Employee Access to Own Records in Attendance &ndash;&gt;-->
-<!--        <record id="group_employee_own_attendance_access" model="res.groups">-->
-<!--            <field name="name">Employee - Own Attendance</field>-->
-<!--            <field name="category_id" ref="base.module_category_human_resources_attendances"/>-->
-<!--        </record>-->
 
         <!-- Group for Manager Access to Own Team Records in Attendance -->
         <record id="group_manager_team_attendance_access" model="res.groups">
@@ -152,14 +147,6 @@
             <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('hr_rule_based_access.group_employee_own_contract_access'))]"/>
         </record>
-
-<!--        &lt;!&ndash; Record Rule: Managers can only see their team's contract records &ndash;&gt;-->
-<!--        <record id="manager_team_contract_rule" model="ir.rule">-->
-<!--            <field name="name">Manager - Team Contract</field>-->
-<!--            <field name="model_id" ref="hr_contract.model_hr_contract"/>-->
-<!--            <field name="domain_force">[('employee_id.department_id.manager_id.user_id', '=', user.id)]</field>-->
-<!--            <field name="groups" eval="[(4, ref('hr_rule_based_access.group_manager_team_contract_access'))]"/>-->
-<!--        </record>-->
 
         <!-- Record Rule: Managers can only see their team's HR records -->
         <record id="manager_team_employee_record_rule" model="ir.rule">
