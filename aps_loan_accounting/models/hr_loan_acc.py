@@ -48,7 +48,7 @@ class HrLoanAcc(models.Model):
                 journal_id = loan.journal_id.id
                 debit_account_id = loan.treasury_account_id.id
                 credit_account_id = loan.employee_account_id.id
-                partner_name = loan.employee_id.address_home_id.id
+                partner_name = loan.employee_id.private_street
                 analytic_account = loan.analytic_account
 
 
@@ -113,7 +113,7 @@ class HrLoanAcc(models.Model):
             journal_id = loan.journal_id.id
             debit_account_id = loan.treasury_account_id.id
             credit_account_id = loan.employee_account_id.id
-            partner_name = loan.employee_id.address_home_id.id
+            partner_name = loan.employee_id.private_street
             analytic_account = loan.analytic_account
 
             debit_vals = {
