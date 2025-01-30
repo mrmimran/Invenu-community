@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Adding a salary rule for loan-->
+    <data noupdate="0">
+
+<!--        <record id="hr_rule_loan" model="hr.salary.rule">-->
+<!--            <field name="code">LO</field>-->
+<!--            <field name="name">Loan</field>-->
+<!--            <field name="category_id" ref="hr_payroll.DED"/>-->
+<!--            <field name="condition_select">python</field>-->
+<!--            <field name="condition_python">result = inputs.LO</field>-->
+<!--            <field name="amount_select">code</field>-->
+<!--            <field name="amount_python_compute">result = inputs.LO and - (inputs.LO.amount)</field>-->
+<!--            <field name="appears_on_payslip" eval="True"/>-->
+<!--            <field name="sequence" eval="190"/>-->
+<!--            <field name="struct_id" ref="aps_hr_payroll_extension.structure_002"/>-->
+<!--        </record>-->
+
+        <record id="hr_rule_input_loan" model="hr.payslip.input.type">
+            <field name="code">LO</field>
+            <field name="name">Loan</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+         <record id="loan" model="hr.salary.rule.category">
+            <field name="name">Loan</field>
+            <field name="code">LO</field>
+        </record>
+
+        <record id="Adv" model="hr.salary.rule.category">
+            <field name="name">Advance</field>
+            <field name="code">Adv</field>
+        </record>
+
+        <record id="hr_rule_input_advance" model="hr.payslip.input.type">
+            <field name="code">Adv</field>
+            <field name="name">Advance</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+<!--        <record id="hr_advance_loan" model="hr.salary.rule">-->
+<!--            <field name="code">Adv</field>-->
+<!--            <field name="name">Advance</field>-->
+<!--            <field name="category_id" ref="hr_payroll.DED"/>-->
+<!--            <field name="condition_select">python</field>-->
+<!--            <field name="condition_python">result = inputs.Adv</field>-->
+<!--            <field name="amount_select">code</field>-->
+<!--            <field name="amount_python_compute">result = inputs.Adv and - (inputs.Adv.amount)</field>-->
+<!--            <field name="appears_on_payslip" eval="True"/>-->
+<!--            <field name="sequence" eval="191"/>-->
+<!--            <field name="struct_id" ref="aps_hr_payroll_extension.structure_002"/>-->
+<!--        </record>-->
+        
+
+    </data>
+</odoo>
