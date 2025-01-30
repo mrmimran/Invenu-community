@@ -185,15 +185,15 @@ result = categories['BASIC'] + categories['ALW'] + categories['DED']
         </record>
 
         <!-- Decimal Precision -->
-        <record forcecreate="True" id="decimal_payroll" model="decimal.precision">
-            <field name="name">Payroll</field>
-            <field name="digits">2</field>
-        </record>
+<!--        <record forcecreate="True" id="decimal_payroll" model="decimal.precision">-->
+<!--            <field name="name">Payroll</field>-->
+<!--            <field name="digits">2</field>-->
+<!--        </record>-->
 
-        <record forcecreate="True" id="decimal_payroll_rate" model="decimal.precision">
-            <field name="name">Payroll Rate</field>
-            <field name="digits">4</field>
-        </record>
+<!--        <record forcecreate="True" id="decimal_payroll_rate" model="decimal.precision">-->
+<!--            <field name="name">Payroll Rate</field>-->
+<!--            <field name="digits">4</field>-->
+<!--        </record>-->
 
         <!-- Work Entry Type -->
          <record id="hr_work_entry_contract.work_entry_type_leave" model="hr.work.entry.type">
