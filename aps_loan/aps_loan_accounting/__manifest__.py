@@ -12,7 +12,7 @@
     'maintainer': 'Altapete Solutions',
     'website': "http://www.altapetesolutions.com/",
     'depends': [
-        'base', 'hr_payroll', 'hr', 'account', 'aps_hr_payroll_extension',
+        'base', 'payroll', 'hr', 'account', 'aps_hr_payroll_extension',
         'account_accountant', 'aps_ent_loan'
     ],
     'data': [
