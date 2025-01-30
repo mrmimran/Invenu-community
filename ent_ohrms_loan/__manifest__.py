@@ -33,7 +33,7 @@
     'live_test_url': 'https://youtu.be/LdUvXDMkd4Q',
     'website': "https://www.openhrms.com",
     'depends': [
-        'base', 'hr_payroll', 'hr', 'account',
+        'base', 'payroll', 'hr', 'account',
     ],
     'data': [
         'security/hr_loan_security.xml',

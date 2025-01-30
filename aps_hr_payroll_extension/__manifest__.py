@@ -6,7 +6,7 @@
     'author': "Altapete Solutions",
     'website': "http://www.altapetesolutions.com/",
     'company': 'Altapete Solutions',
-    'depends': ['base', 'hr', 'hr_payroll', 'hr_contract'],
+    'depends': ['base', 'hr', 'payroll', 'hr_contract'],
     'application': True,
     'images': ['static/description/icon.png'],
     'data': [
