@@ -37,8 +37,18 @@ class SalaryAdvance(models.Model):
     name = fields.Char(string='Name', readonly=True,
                        default=lambda self: 'Adv/',
                        help='Name of the the advanced salary.')
-    employee_id = fields.Many2one('hr.employee', string='Employee',
-                                  required=True, help="Name of the Employee")
+    # employee_id = fields.Many2one('hr.employee', string='Employee',
+    #                               required=True, help="Name of the Employee")
+
+    employee_id = fields.Many2one(
+        'hr.employee',
+        string='Employee',
+        required=True,
+        help="Name of the Employee",
+        default=lambda self: self.env['hr.employee'].search([('user_id', '=', self.env.user.id)], limit=1),
+        readonly=True
+    )
+
     date = fields.Date(string='Date', required=True,
                        default=lambda self: fields.Date.today(),
                        help="Submit date of the advanced salary.")
