@@ -78,7 +78,6 @@ class SalaryAdvance(models.Model):
                                  help='Department of the employee.')
     state = fields.Selection([('draft', 'Draft'),
                               ('submit', 'Submitted'),
-                              ('waiting_approval', 'Waiting Approval'),
                               ('approve', 'Approved'),
                               ('cancel', 'Cancelled'),
                               ('reject', 'Rejected')], string='Status',
@@ -94,6 +93,10 @@ class SalaryAdvance(models.Model):
                                            related='employee_id.contract_id',
                                            help='Running contract of the '
                                                 'employee.')
+
+    last_sending_date = fields.Datetime(string='Last Sending Date', readonly=True, store=True)
+    sent = fields.Boolean(string='Sent', default=False, readonly=True, store=True)
+    sync = fields.Boolean(string='Sync', default=False)
 
     @api.onchange('company_id')
     def _onchange_company_id(self):

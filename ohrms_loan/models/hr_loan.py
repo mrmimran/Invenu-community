@@ -99,6 +99,10 @@ class HrLoan(models.Model):
          ], string="State", default='draft', help="The current state of the "
                                                   "loan request.", copy=False)
 
+    last_sending_date = fields.Datetime(string='Last Sending Date', readonly=True, store=True)
+    sent = fields.Boolean(string='Sent', default=False, readonly=True, store=True)
+    sync = fields.Boolean(string='Sync', default=False)
+
     def _compute_total_amount(self):
         """ Compute total loan amount,balance amount and total paid amount"""
         total_paid = 0.0

@@ -26,15 +26,15 @@
                             invisible="state in ('approve','refuse')"/>
                     <button name="action_submit" type="object" string="Submit" invisible="state != 'draft'"
                             class="oe_highlight"/>
-                    <button name="action_approve" type="object"
-                            string="Approve" invisible="state != 'waiting_approval_1'"
-                            class="oe_highlight"
-                            groups="hr.group_hr_manager"/>
-                    <button name="action_refuse" type="object" string="Refuse"
-                            invisible="state not in ['draft','waiting_approval_1']"
-                            class="oe_highlight"
-                            groups="hr.group_hr_manager"/>
-                    <button name="action_cancel" type="object" string="Cancel" invisible="state != 'draft'"/>
+<!--                    <button name="action_approve" type="object"-->
+<!--                            string="Approve" invisible="state != 'waiting_approval_1'"-->
+<!--                            class="oe_highlight"-->
+<!--                            groups="hr.group_hr_manager"/>-->
+<!--                    <button name="action_refuse" type="object" string="Refuse"-->
+<!--                            invisible="state not in ['draft','waiting_approval_1']"-->
+<!--                            class="oe_highlight"-->
+<!--                            groups="hr.group_hr_manager"/>-->
+<!--                    <button name="action_cancel" type="object" string="Cancel" invisible="state != 'draft'"/>-->
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,waiting_approval_1,approve"/>
                 </header>
@@ -47,7 +47,7 @@
                         </h1>
                     </div>
                     <group col="4">
-                        <field name="employee_id" readonly="state == 'approve'"/>
+                        <field name="employee_id" readonly="1"/>
                         <field name="date"/>
                         <field name="department_id"/>
                         <field name="job_position"/>
@@ -55,10 +55,10 @@
                         <field name="installment" readonly="state == 'approve'"/>
                         <field name="payment_date" readonly="state == 'approve'"/>
                         <field name="company_id" options="{'no_create': True}"
-                               readonly="state != 'draft'"
-                               groups="base.group_multi_company"/>
-                        <field name="currency_id"
-                               options="{'no_create': True}"/>
+                               readonly="1"
+                               groups="base.group_multi_company"  />
+<!--                        <field name="currency_id"-->
+<!--                               options="{'no_create': True}" readonly="1"/>-->
                     </group>
                     <notebook>
                         <page string="Installments">
@@ -83,6 +83,12 @@
                                        options="{'currency_field': 'currency_id'}"/>
                             </group>
                             <div class="oe_clear"/>
+                        </page>
+                        <page string="Sync Configurations" name="sync_configurations">
+                            <group string="Sync Configurations">
+                                <field name="last_sending_date"/>
+                                <field name="sent"/>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
