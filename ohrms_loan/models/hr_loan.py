@@ -120,16 +120,16 @@ class HrLoan(models.Model):
         """ Check whether any pending loan is for the employee and calculate
             the sequence
             :param values : Dictionary which contain fields and values"""
-        loan_count = self.env['hr.loan'].search_count(
-            [('employee_id', '=', values['employee_id']),
-             ('state', '=', 'approve'),
-             ('balance_amount', '!=', 0)])
-        if loan_count:
-            raise ValidationError(
-                _("The Employee has already a pending installment"))
-        else:
-            values['name'] = self.env['ir.sequence'].get('hr.loan.seq') or ' '
-            return super(HrLoan, self).create(values)
+        # loan_count = self.env['hr.loan'].search_count(
+        #     [('employee_id', '=', values['employee_id']),
+        #      ('state', '=', 'approve'),
+        #      ('balance_amount', '!=', 0)])
+        # if loan_count:
+        #     raise ValidationError(
+        #         _("The Employee has already a pending installment"))
+        # else:
+        values['name'] = self.env['ir.sequence'].get('hr.loan.seq') or ' '
+        return super(HrLoan, self).create(values)
 
     def action_compute_installment(self):
         """This automatically create the installment the employee need to pay to
