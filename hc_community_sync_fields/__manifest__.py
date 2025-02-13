@@ -21,7 +21,7 @@
     'category': 'Human Resources',
     'version': '0.1',
 
-    'depends': ['base','hr','project','account', 'hr_timesheet', 'hr_holidays','hr_contract','hr_attendance','hc_company_community_info'],
+    'depends': ['base','hr','project','account', 'hr_timesheet', 'hr_holidays','hr_contract','hr_attendance'],
 
     'data': [
         # 'views/cron_data.xml',
