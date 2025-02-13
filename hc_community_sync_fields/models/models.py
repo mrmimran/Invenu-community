@@ -59,6 +59,15 @@ def get_session_id():
 # Rest of the code remains unchanged...
 
 
+class ResUsers(models.Model):
+    _inherit = 'res.users'
+
+    # New field for Last Source ID
+    source_id = fields.Integer(string="Source ID", help="ID from the external API", readonly=True)
+    # New field for Last Sync Date
+    last_sync_date = fields.Datetime(string='Last Sync Date', readonly=True)
+
+
 class ProjectProject(models.Model):
     _inherit = 'project.project'
 
