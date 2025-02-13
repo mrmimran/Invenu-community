@@ -138,3 +138,11 @@ class HrAttendance(models.Model):
 #     # Fields for synchronization
 #     source_id = fields.Integer(string="Source ID", help="ID from the external API", readonly=True)
 #     last_sync_date = fields.Datetime(string='Last Sync Date', readonly=True)
+
+
+class ResUsers(models.Model):
+    _inherit = 'res.users'
+
+    sent = fields.Boolean(string='Sent', default=False, readonly=True, store=True)
+    sync = fields.Boolean(string='Sync', default=False)
+
