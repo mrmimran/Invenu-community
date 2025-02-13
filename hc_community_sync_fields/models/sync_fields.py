@@ -140,9 +140,9 @@ class HrAttendance(models.Model):
 #     last_sync_date = fields.Datetime(string='Last Sync Date', readonly=True)
 
 
-class ResUsers(models.Model):
-    _inherit = 'res.users'
+# class ResUsers(models.Model):
+#     _inherit = 'res.users'
 
-    sent = fields.Boolean(string='Sent', default=False, readonly=True, store=True)
-    sync = fields.Boolean(string='Sync', default=False)
+    # sent = fields.Boolean(string='Sent', default=False, readonly=True, store=True)
+    # sync = fields.Boolean(string='Sync', default=False)
 
