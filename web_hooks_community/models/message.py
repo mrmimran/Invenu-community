@@ -53,7 +53,7 @@ class MailMessage(models.Model):
 
                 'create_uid': create_uid.id if create_uid else False,
                 'write_uid': write_uid.id if write_uid else False,
-                'author_id': author_id.id if author_id else False,
+                'author_id': author_id.partner_id.id if author_id else False,
 
                 'res_id': res_id.id,
                 'model': payload.get('model'),
