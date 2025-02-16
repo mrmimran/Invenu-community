@@ -11,7 +11,7 @@
     'depends': ['base', 'base_setup', 'mail'],
 
     'data': [
-        # 'views/res_company.xml',
+        'views/res_company.xml',
     ],
 
 }
