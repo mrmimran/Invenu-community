@@ -37,6 +37,7 @@ class MailMessage(models.Model):
     @api.model
     def receive_enterprise_chatter_data(self, payload):
         for rec in self:
+            payload = json.loads(payload)
             res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
             if res_id:
                 self.create({
