@@ -40,7 +40,7 @@ class MailMessage(models.Model):
             res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
             if res_id:
                 self.create({
-                    'date': payload.get('date'),
+                    # 'date': payload.get('date'),
                     'message_type': payload.get('message_type'),
                     'record_name': payload.get('record_name'),
                     'subject': payload.get('subject'),
