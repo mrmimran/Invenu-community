@@ -11,19 +11,42 @@ class MailMessage(models.Model):
     is_through_integration = fields.Boolean()
 
 
+    # def send_community_chatter_data(self):
+    #     for rec in self:
+    #         # url = "http://8.213.43.22:8074/web/hook/5d30af0e-4a3e-4683-9243-b424c6080913"
+    #         url = self.env.company.odoo_chatter_automation_url
+    #         if url:
+    #             res = self.env['project.task'].search([('id', '=', rec.res_id)])
+    #             payload = json.dumps({
+    #                 "res_id": res.source_id,
+    #                 "model": rec.model,
+    #                 "body": rec.body,
+    #             })
+    #             headers = {
+    #                 'Content-Type': 'application/json'
+    #             }
+    #             response = requests.request("POST", url, headers=headers, data=payload)
+    #             print(response.text)
+
+
     def send_community_chatter_data(self):
         for rec in self:
-            # url = "http://8.213.43.22:8074/web/hook/5d30af0e-4a3e-4683-9243-b424c6080913"
             url = self.env.company.odoo_chatter_automation_url
             if url:
+                res = self.env['project.task'].search([('id', '=', rec.res_id)])
                 payload = json.dumps({
-                    "res_id": 8,
+                    'message_type': rec.message_type,
+                    'record_name': rec.record_name,
+                    'subject': rec.subject,
+                    'create_uid': rec.create_uid.id,
+                    'write_uid': rec.write_uid.id,
+                    'author_id': rec.author_id.user_ids.ids[0] if rec.author_id.user_ids else False,
+                    "res_id": res.source_id,
                     "model": rec.model,
-                    "body": rec.body,
+                    "body": rec.author_id.name + rec.body,
                 })
-                headers = {
-                    'Content-Type': 'application/json'
-                }
+                # raise UserError(payload)
+                headers = {'Content-Type': 'application/json'}
                 response = requests.request("POST", url, headers=headers, data=payload)
                 print(response.text)
 
@@ -31,12 +54,11 @@ class MailMessage(models.Model):
     @api.model
     def create(self, values):
         res = super(MailMessage, self).create(values)
-        if not res.is_through_integration:
+        if not res.is_through_integration and res.model == 'project.task':
             res.send_community_chatter_data()
         return res
 
 
-    # @api.model
     def receive_enterprise_chatter_data(self, payload):
         res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
 
