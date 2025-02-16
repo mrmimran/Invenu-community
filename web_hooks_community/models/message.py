@@ -58,7 +58,7 @@ class MailMessage(models.Model):
 
     @api.model
     def receive_enterprise_chatter_data(self, payload):
-        payload = json.loads(payload)
+        # payload = json.loads(payload)
         self.create({
             'res_id': payload.get('res_id'),
             'model': payload.get('model'),
