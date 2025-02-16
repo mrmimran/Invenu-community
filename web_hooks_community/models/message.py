@@ -40,11 +40,11 @@ class MailMessage(models.Model):
     def receive_enterprise_chatter_data(self, payload):
         res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
 
-        create_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('create_uid'))])
-        write_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('write_uid'))])
-        author_id = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('author_id'))])
-
         if res_id:
+            create_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('create_uid'))], limit=1)
+            write_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('write_uid'))], limit=1)
+            author_id = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('author_id'))], limit=1)
+
             self.create({
                 'message_type': payload.get('message_type'),
                 'record_name': payload.get('record_name'),
@@ -56,6 +56,6 @@ class MailMessage(models.Model):
 
                 'res_id': res_id.id,
                 'model': payload.get('model'),
-                'body': '<b>' + author_id.name + "</b> :" + payload.get('body') if author_id else  payload.get('body'),
+                'body': payload.get('body'),
                 'is_through_integration': True
             })
