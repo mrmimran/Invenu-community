@@ -2,6 +2,8 @@
 from odoo import models, fields, api, _
 import requests
 import json
+from datetime import datetime
+
 
 class MailMessage(models.Model):
     _inherit = 'mail.message'
@@ -36,11 +38,11 @@ class MailMessage(models.Model):
 
     # @api.model
     def receive_enterprise_chatter_data(self, payload):
-        # payload = json.loads(payload)
         res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
         if res_id:
+            date = datetime.strptime(payload.get('date'), "%Y-%m-%d %H:%M:%S")
             self.create({
-                # 'date': payload.get('date'),
+                'date': date,
                 'message_type': payload.get('message_type'),
                 'record_name': payload.get('record_name'),
                 'subject': payload.get('subject'),
@@ -54,14 +56,3 @@ class MailMessage(models.Model):
                 'body': payload.get('body'),
                 'is_through_integration': True
             })
-
-
-    # @api.model
-    # def receive_enterprise_chatter_data(self, payload):
-    #     # payload = json.loads(payload)
-    #     self.create({
-    #         'res_id': payload.get('res_id'),
-    #         'model': payload.get('model'),
-    #         'body': payload.get('body'),
-    #         'is_through_integration': True
-    #     })
