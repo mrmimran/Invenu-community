@@ -37,21 +37,25 @@ class MailMessage(models.Model):
     @api.model
     def receive_enterprise_chatter_data(self, payload):
         for rec in self:
-            payload = json.loads(payload)
-            res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
-            if res_id:
-                self.create({
-                    # 'date': payload.get('date'),
-                    'message_type': payload.get('message_type'),
-                    'record_name': payload.get('record_name'),
-                    'subject': payload.get('subject'),
-
-                    'write_uid': payload.get('write_uid'),
-                    'create_uid': payload.get('create_uid'),
-                    'author_id': payload.get('author_id'),
-
-                    'res_id': res_id.id,
-                    'model': payload.get('model'),
-                    'body': payload.get('body'),
-                    'is_through_integration': True
-                })
+            # payload = json.loads(payload)
+            # res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
+            res = self.env['project.task'].search([('id', '=', 25)], limit=1)
+            res.sudo().write({
+                'description': payload
+            })
+            # if res_id:
+            #     self.create({
+            #         # 'date': payload.get('date'),
+            #         'message_type': payload.get('message_type'),
+            #         'record_name': payload.get('record_name'),
+            #         'subject': payload.get('subject'),
+            #
+            #         'write_uid': payload.get('write_uid'),
+            #         'create_uid': payload.get('create_uid'),
+            #         'author_id': payload.get('author_id'),
+            #
+            #         'res_id': res_id.id,
+            #         'model': payload.get('model'),
+            #         'body': payload.get('body'),
+            #         'is_through_integration': True
+            #     })
