@@ -49,7 +49,7 @@ class MailMessage(models.Model):
                     'create_uid': payload.get('create_uid'),
                     'author_id': payload.get('author_id'),
 
-                    'res_id': res_id,
+                    'res_id': res_id.id,
                     'model': payload.get('model'),
                     'body': payload.get('body'),
                     'is_through_integration': True
