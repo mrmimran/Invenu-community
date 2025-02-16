@@ -40,9 +40,7 @@ class MailMessage(models.Model):
     def receive_enterprise_chatter_data(self, payload):
         res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
         if res_id:
-            date = datetime.strptime(payload.get('date'), "%Y-%m-%d %H:%M:%S")
             self.create({
-                # 'date': date,
                 'message_type': payload.get('message_type'),
                 'record_name': payload.get('record_name'),
                 'subject': payload.get('subject'),
