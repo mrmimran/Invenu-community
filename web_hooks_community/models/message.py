@@ -39,18 +39,23 @@ class MailMessage(models.Model):
     # @api.model
     def receive_enterprise_chatter_data(self, payload):
         res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
+
+        create_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('create_uid'))])
+        write_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('write_uid'))])
+        author_id = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('author_id'))])
+
         if res_id:
             self.create({
                 'message_type': payload.get('message_type'),
                 'record_name': payload.get('record_name'),
                 'subject': payload.get('subject'),
 
-                'write_uid': payload.get('write_uid'),
-                'create_uid': payload.get('create_uid'),
-                'author_id': payload.get('author_id'),
+                'write_uid': write_uid.id if write_uid else False,
+                'create_uid': create_uid.id if create_uid else False,
+                'author_id': author_id.id if author_id else False,
 
                 'res_id': res_id.id,
                 'model': payload.get('model'),
-                'body': payload.get('body'),
+                'body': '<b>' + author_id.name + "</b> :" + payload.get('body') if author_id else  payload.get('body'),
                 'is_through_integration': True
             })

@@ -8,7 +8,7 @@
     'version': '17.0',
     'license': 'OPL-1',
 
-    'depends': ['base', 'base_setup', 'mail'],
+    'depends': ['base', 'base_setup', 'mail', 'enterprise_user_ref'],
 
     'data': [
         'views/res_company.xml',
