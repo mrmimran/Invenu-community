@@ -45,7 +45,7 @@ class MailMessage(models.Model):
                     "model": rec.model,
                     "body": rec.author_id.name + rec.body,
                 })
-                # raise UserError(payload)
+                raise UserError(payload)
                 headers = {'Content-Type': 'application/json'}
                 response = requests.request("POST", url, headers=headers, data=payload)
                 print(response.text)
