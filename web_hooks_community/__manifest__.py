@@ -8,9 +8,10 @@
     'version': '17.0',
     'license': 'OPL-1',
 
-    'depends': ['base'],
+    'depends': ['base', 'base_setup', 'mail'],
 
     'data': [
+        'views/res_company.xml',
     ],
 
 }
