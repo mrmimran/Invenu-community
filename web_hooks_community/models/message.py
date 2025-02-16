@@ -41,17 +41,18 @@ class MailMessage(models.Model):
         res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
 
         if res_id:
+
             create_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('create_uid'))], limit=1)
             write_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('write_uid'))], limit=1)
             author_id = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('author_id'))], limit=1)
 
-            self.create({
+            self.env['mail.message'].sudo().create({
                 'message_type': payload.get('message_type'),
                 'record_name': payload.get('record_name'),
                 'subject': payload.get('subject'),
 
-                'write_uid': write_uid.id if write_uid else False,
                 'create_uid': create_uid.id if create_uid else False,
+                'write_uid': write_uid.id if write_uid else False,
                 'author_id': author_id.id if author_id else False,
 
                 'res_id': res_id.id,
