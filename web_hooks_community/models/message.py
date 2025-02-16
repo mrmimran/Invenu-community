@@ -42,7 +42,7 @@ class MailMessage(models.Model):
         if res_id:
             date = datetime.strptime(payload.get('date'), "%Y-%m-%d %H:%M:%S")
             self.create({
-                'date': date,
+                # 'date': date,
                 'message_type': payload.get('message_type'),
                 'record_name': payload.get('record_name'),
                 'subject': payload.get('subject'),
