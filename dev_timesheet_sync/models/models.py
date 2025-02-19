@@ -101,13 +101,13 @@ class AccountAnalyticLine(models.Model):
 
         # Prepare the timesheet data to pass to the sync method
         timesheet_data = {
-            'task_id': res.task_id.id,
+            # 'task_id': res.task_id.id,
             # 'project_id': 22,
-            'project_id': res.project_id.source_id,
-            # 'project_id': 27,
-            # 'task_id': 76,
-            'employee_id': res.employee_id.source_id,
-            # 'employee_id': 89,
+            # 'project_id': res.project_id.source_id,
+            'project_id': 27,
+            'task_id': 76,
+            # 'employee_id': res.employee_id.source_id,
+            'employee_id': 75,
             # 'task_id': res.task_id.source_id,
             'date': res.date,
             'unit_amount': res.unit_amount,
