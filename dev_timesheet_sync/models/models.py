@@ -19,22 +19,14 @@ class AccountAnalyticLine(models.Model):
         All connection parameters for the Enterprise database are fetched from the Odoo instance.
         """
 
-
-        # Define the connection parameters for the Enterprise Odoo instance
-        # enterprise_config = {
-        #     'url': 'https://testerp.invenu.com',  # Update with your Enterprise Odoo URL
-        #     'db': 'dev-invenu-db-db',  # Update with your Enterprise Odoo Database Name
-        #     'username': 'admin@gmail.com',  # Update with the Enterprise username
-        #     'password': 'admin'  # Update with the Enterprise password
-        # }
-        # sync_url = self.env.company.sync_url
-        sync_url = 'https://art-ethereal-advertising-company-staging-main-18283947.dev.odoo.com'
-        # sync_db = self.env.company.sync_db
-        sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
-        # sync_login = self.env.company.sync_login
-        sync_login = 'admin@gmail.com'
-        # sync_pass = self.env.company.sync_pass
-        sync_pass = 'admin'
+        sync_url = self.env.company.sync_url
+        # sync_url = 'https://art-ethereal-advertising-company-staging-main-18283947.dev.odoo.com'
+        sync_db = self.env.company.sync_db
+        # sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
+        sync_login = self.env.company.sync_login
+        # sync_login = 'admin@gmail.com'
+        sync_pass = self.env.company.sync_pass
+        # sync_pass = 'admin'
 
 
         enterprise_config = {
@@ -101,13 +93,8 @@ class AccountAnalyticLine(models.Model):
 
         # Prepare the timesheet data to pass to the sync method
         timesheet_data = {
-            # 'task_id': res.task_id.id,
-            # 'project_id': 22,
             'project_id': res.project_id.source_id,
-            # 'project_id': 27,
-            # 'task_id': 76,
             'employee_id': res.employee_id.source_id,
-            # 'employee_id': 75,
             'task_id': res.task_id.source_id,
             'date': res.date,
             'unit_amount': res.unit_amount,
