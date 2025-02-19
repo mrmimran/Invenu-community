@@ -10,6 +10,8 @@ class MailMessage(models.Model):
     _inherit = 'mail.message'
 
     is_through_integration = fields.Boolean()
+    automation_source_id = fields.Integer()
+
     def send_community_chatter_data(self):
         for rec in self:
             url = self.env.company.odoo_chatter_automation_url
@@ -25,6 +27,7 @@ class MailMessage(models.Model):
                     "res_id": res.source_id,
                     "model": rec.model,
                     "body": rec.author_id.name + rec.body,
+                    "automation_source_id": rec.id,
                 })
                 # raise UserError(payload)
                 headers = {'Content-Type': 'application/json'}
@@ -60,6 +63,7 @@ class MailMessage(models.Model):
                 'res_id': res_id.id,
                 'model': payload.get('model'),
                 'body': payload.get('body'),
+                'automation_source_id': payload.get('automation_source_id'),
                 # 'attachment_ids': payload.get('attachment_ids'),
                 'is_through_integration': True
             })
@@ -77,24 +81,3 @@ class MailMessage(models.Model):
                        'mimetype': att.mimetype,  # MIME type for PDF files
                    })
                    raise UserError(payload)
-
-
-
-
-
-
-    # def write(self, vals):
-    #     res = super().write(vals)
-    #     attachment = self.env['ir.attachment'].sudo().create({
-    #         'name': self.attachment_ids.name,
-    #         'type': self.attachment_ids.type,
-    #         'datas': self.attachment_ids.datas,  # base64 encoding the PDF content
-    #         'store_fname': self.attachment_ids.store_fname,  # Filename that the user sees
-    #         'res_model': self.attachment_ids.res_model,  # The model to which the attachment is linked
-    #         'res_id': self.attachment_ids.res_id,  # The ID of the resource to which the attachment is linked
-    #         'mimetype': self.attachment_ids.mimetype,  # MIME type for PDF files
-    #     })
-    #
-    #     return res
-
-

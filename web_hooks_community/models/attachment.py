@@ -5,7 +5,6 @@ import base64
 import json
 
 
-
 class IrAttachment(models.Model):
     _inherit = 'ir.attachment'
 
@@ -18,3 +17,4 @@ class IrAttachment(models.Model):
             'mimetype': payload.get('mimetype'),
             'datas': base64.b64decode(payload.get('datas')),
         })
+
