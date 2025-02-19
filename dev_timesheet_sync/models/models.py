@@ -92,8 +92,8 @@ class AccountAnalyticLine(models.Model):
         timesheet_data = {
             # 'task_id': res.task_id.id,
             # 'project_id': 22,
-            'project_id': res.project_id.source_id.id,
-            'task_id': res.task_id.source_id.id,
+            'project_id': res.project_id.source_id,
+            'task_id': res.task_id.source_id,
             'date': res.date,
             'unit_amount': res.unit_amount,
             'name': res.name,
