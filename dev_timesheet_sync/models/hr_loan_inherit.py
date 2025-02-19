@@ -77,11 +77,9 @@ class HrLoan(models.Model):
 
         # Create or update loan line in the Enterprise Odoo instance
         try:
-            sync_db = 'enterprise-db'  # Replace with actual Enterprise DB if needed
-            sync_pass = 'admin'  # Replace with actual Enterprise password
 
             loan_line_id = enterprise_models.execute_kw(
-                sync_db, enterprise_uid, sync_pass,
+                self.env.company.sync_db, enterprise_uid, self.env.company.sync_pass,
                 'hr.loan.line', 'create',  # Model name 'hr.loan.line'
                 [loan_line_data]
             )
@@ -115,13 +113,13 @@ class HrLoan(models.Model):
         self.sync_loan_to_enterprise(loan_data)
         #
         # # Now sync all associated loan lines
-        # for line in res.line_ids:
-        #     loan_line_data = {
-        #         'loan_id': line.loan_id.source_id,  # Assuming there's a source_id for loan
-        #         'amount': line.amount,
-        #         'date': line.date,
-        #         'state': line.state,
-        #     }
-        #     self.sync_loan_line_to_enterprise(loan_line_data)
+        for line in res.line_ids:
+            loan_line_data = {
+                'loan_id': line.loan_id.id,  # Assuming there's a source_id for loan
+                'amount': line.amount,
+                'date': line.date,
+                'state': line.state,
+            }
+            self.sync_loan_line_to_enterprise(loan_line_data)
 
         return res
