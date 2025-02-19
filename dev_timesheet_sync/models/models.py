@@ -27,11 +27,21 @@ class AccountAnalyticLine(models.Model):
         #     'username': 'admin@gmail.com',  # Update with the Enterprise username
         #     'password': 'admin'  # Update with the Enterprise password
         # }
+        sync_url = self.env.company.sync_url
+        # sync_url = 'https://art-ethereal-advertising-company-staging-main-18283947.dev.odoo.com'
+        sync_db = self.env.company.sync_db
+        # sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
+        sync_login = self.env.company.sync_login
+        # sync_login = 'admin@gmail.com'
+        sync_pass = self.env.company.sync_pass
+        # sync_pass = 'admin'
+
+
         enterprise_config = {
-            'url': self.env.company.sync_url,
-            'db': self.env.company.sync_db,
-            'username': self.env.company.sync_login,
-            'password': self.env.company.sync_pass
+            'url': sync_url,
+            'db': sync_db,
+            'username': sync_login,
+            'password': sync_pass
         }
 
         try:
@@ -61,9 +71,12 @@ class AccountAnalyticLine(models.Model):
 
         # Create or update timesheet in the Enterprise Odoo instance
         try:
+            sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
+            sync_pass = 'admin'
+
             enterprise_timesheet_id = enterprise_models.execute_kw(
-                # self.env.company.sync_db, enterprise_uid, self.env.company.sync_pass,
                 self.env.company.sync_db, enterprise_uid, self.env.company.sync_pass,
+                # db, enterprise_uid, sync_pass,
                 'account.analytic.line', 'create',
                 [timesheet_data]
             )
@@ -88,12 +101,14 @@ class AccountAnalyticLine(models.Model):
 
         # Prepare the timesheet data to pass to the sync method
         timesheet_data = {
-            # 'task_id': res.task_id.id,
+            'task_id': res.task_id.id,
             # 'project_id': 22,
             'project_id': res.project_id.source_id,
             # 'project_id': 27,
             # 'task_id': 76,
-            'task_id': res.task_id.source_id,
+            'employee_id': res.employee_id.source_id,
+            # 'employee_id': 89,
+            # 'task_id': res.task_id.source_id,
             'date': res.date,
             'unit_amount': res.unit_amount,
             'name': res.name,
