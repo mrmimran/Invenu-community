@@ -27,25 +27,34 @@ class MailMessage(models.Model):
             "datas": encoded_data
         }
 
-    def send_community_chatter_data(self):
+    def send_community_chatter_data(self, automation_type):
         for rec in self:
             url = rec.get_chatter_automation_url()
             if url:
                 attachment_datas = [rec.prepare_attachment_data(att) for att in rec.attachment_ids]
-                res = self.env['project.task'].search([('id', '=', rec.res_id)])
-                payload = json.dumps({
-                    'message_type': rec.message_type,
-                    'record_name': rec.record_name,
-                    'subject': rec.subject,
-                    'create_uid': rec.create_uid.id,
-                    'write_uid': rec.write_uid.id,
-                    'author_id': rec.author_id.user_ids.ids[0] if rec.author_id.user_ids else False,
-                    "res_id": res.source_id,
-                    "model": rec.model,
-                    "body": rec.author_id.name + rec.body,
-                    "automation_source_id": rec.id,
-                    "attachment_ids": attachment_datas,
-                })
+                if automation_type == 'from_create':
+                    res = self.env['project.task'].search([('id', '=', rec.res_id)])
+                    payload = json.dumps({
+                        'message_type': rec.message_type,
+                        'record_name': rec.record_name,
+                        'subject': rec.subject,
+                        'create_uid': rec.create_uid.id,
+                        'write_uid': rec.write_uid.id,
+                        'author_id': rec.author_id.user_ids.ids[0] if rec.author_id.user_ids else False,
+                        "res_id": res.source_id,
+                        "model": rec.model,
+                        "body": rec.author_id.name + rec.body,
+                        "automation_source_id": rec.id,
+                        "attachment_ids": attachment_datas,
+                        "automation_type": automation_type,
+                    })
+                elif automation_type == "from_write":
+                    payload = json.dumps({
+                        "body": rec.body,
+                        "id": rec.id,
+                        "attachment_ids": attachment_datas,
+                        "automation_type": automation_type,
+                    })
                 # raise UserError(payload)
                 headers = {'Content-Type': 'application/json'}
                 response = requests.request("POST", url, headers=headers, data=payload)
@@ -55,16 +64,18 @@ class MailMessage(models.Model):
     @api.model
     def create(self, values):
         res = super(MailMessage, self).create(values)
-        if not res.is_through_integration and res.model == 'project.task':
-            res.send_community_chatter_data()
+        if not res.is_through_integration and res.model in ['project.project', 'project.task']:
+            res.send_enterprise_chatter_data("from_create")
         return res
 
-    # def write(self, values):
-    #     res = super(MailMessage, self).write(values)
-    #     if not self.env.context.get('writing_automations', False):
-    #         if res.model in ['project.project', 'project.task']:
-    #             res.send_enterprise_chatter_data("from_write")
-    #     return res
+
+    def write(self, values):
+        res = super(MailMessage, self).write(values)
+        if not self.env.context.get('writing_automations', False):
+            if self.model in ['project.project', 'project.task'] and values and (values['body'] or values['attachment_ids']):
+                self.send_enterprise_chatter_data("from_write")
+        return res
+
 
 
     def get_attachment_ref(self, payload):
@@ -111,10 +122,3 @@ class MailMessage(models.Model):
                     "attachment_ids": attachments,
                 })
 
-
-    # payload = json.dumps({
-    #     "body": rec.body,
-    #     "source_id": rec.id,
-    #     "attachment_ids": attachment_datas,
-    #     "automation_type": automation_type,
-    # })
