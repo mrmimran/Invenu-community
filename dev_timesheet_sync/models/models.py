@@ -61,11 +61,9 @@ class AccountAnalyticLine(models.Model):
 
         # Create or update timesheet in the Enterprise Odoo instance
         try:
-            db = "dev-invenu-db-db"
-            password = "admin"
             enterprise_timesheet_id = enterprise_models.execute_kw(
                 # self.env.company.sync_db, enterprise_uid, self.env.company.sync_pass,
-                db, enterprise_uid, password,
+                self.env.company.sync_db, enterprise_uid, self.env.company.sync_pass,
                 'account.analytic.line', 'create',
                 [timesheet_data]
             )
@@ -92,10 +90,10 @@ class AccountAnalyticLine(models.Model):
         timesheet_data = {
             # 'task_id': res.task_id.id,
             # 'project_id': 22,
-            # 'project_id': res.project_id.source_id,
-            'project_id': 27,
-            'task_id': 76,
-            # 'task_id': res.task_id.source_id,
+            'project_id': res.project_id.source_id,
+            # 'project_id': 27,
+            # 'task_id': 76,
+            'task_id': res.task_id.source_id,
             'date': res.date,
             'unit_amount': res.unit_amount,
             'name': res.name,
