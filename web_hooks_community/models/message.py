@@ -77,10 +77,9 @@ class MailMessage(models.Model):
                 # 'attachment_ids': payload.get('attachment_ids'),
                 'is_through_integration': True
             })
-            attachment_ids = []
             if payload.get('attachment_ids', False):
-                attachment_ids.append(message.get_attachment_ref(att) for att in payload.get('attachment_ids'))
-                message.attachment_ids = attachment_ids
+                attachments=[message.get_attachment_ref(att) for att in payload.get('attachment_ids')]
+                message.attachment_ids = attachments
 
             # attachments = message.attachment_ids
             # if attachments:
