@@ -70,13 +70,13 @@ class MailMessage(models.Model):
 
     def receive_enterprise_chatter_data(self, payload):
         res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
-
         if res_id:
-
             create_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('create_uid'))], limit=1)
             write_uid = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('write_uid'))], limit=1)
             author_id = self.env['res.users'].search([('enterprise_user_reference', '=', payload.get('author_id'))], limit=1)
-
+            attachments = []
+            if payload.get('attachment_ids', False):
+                attachments=[self.get_attachment_ref(att) for att in payload.get('attachment_ids')]
             # Create the message
             message = self.env['mail.message'].sudo().create({
                 'message_type': payload.get('message_type'),
@@ -89,23 +89,7 @@ class MailMessage(models.Model):
                 'model': payload.get('model'),
                 'body': payload.get('body'),
                 'automation_source_id': payload.get('automation_source_id'),
-                # 'attachment_ids': payload.get('attachment_ids'),
-                'is_through_integration': True
+                'attachment_ids': attachments,
+                'is_through_integration': True,
             })
-            if payload.get('attachment_ids', False):
-                attachments=[message.get_attachment_ref(att) for att in payload.get('attachment_ids')]
-                message.attachment_ids = attachments
 
-            # attachments = message.attachment_ids
-            # if attachments:
-            #    for att in attachments:
-            #        attachment = self.env['ir.attachment'].sudo().create({
-            #            'name': att.name,
-            #            'type': att.type,
-            #            'datas': att.datas,  # base64 encoding the PDF content
-            #            'store_fname': att.store_fname,  # Filename that the user sees
-            #            'res_model': att.res_model,  # The model to which the attachment is linked
-            #            'res_id': att.res_id,  # The ID of the resource to which the attachment is linked
-            #            'mimetype': att.mimetype,  # MIME type for PDF files
-            #        })
-            #        raise UserError(payload)
