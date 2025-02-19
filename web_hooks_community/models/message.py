@@ -65,7 +65,7 @@ class MailMessage(models.Model):
     def create(self, values):
         res = super(MailMessage, self).create(values)
         if not res.is_through_integration and res.model in ['project.project', 'project.task']:
-            res.send_enterprise_chatter_data("from_create")
+            res.send_community_chatter_data("from_create")
         return res
 
 
@@ -73,7 +73,7 @@ class MailMessage(models.Model):
         res = super(MailMessage, self).write(values)
         if not self.env.context.get('writing_automations', False):
             if self.model in ['project.project', 'project.task'] and values and (values['body'] or values['attachment_ids']):
-                self.send_enterprise_chatter_data("from_write")
+                self.send_community_chatter_data("from_write")
         return res
 
 
