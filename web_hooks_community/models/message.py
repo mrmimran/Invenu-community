@@ -72,8 +72,11 @@ class MailMessage(models.Model):
     def write(self, values):
         res = super(MailMessage, self).write(values)
         if not self.env.context.get('writing_automations', False):
-            if self.model in ['project.project', 'project.task'] and values and (values['body'] or values['attachment_ids']):
-                self.send_community_chatter_data("from_write")
+            try:
+                if self.model in ['project.project', 'project.task'] and values and (values['body'] or values['attachment_ids']):
+                    self.send_community_chatter_data("from_write")
+            except:
+                pass
         return res
 
 
