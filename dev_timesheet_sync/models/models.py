@@ -76,7 +76,6 @@ class AccountAnalyticLine(models.Model):
 
             enterprise_timesheet_id = enterprise_models.execute_kw(
                 self.env.company.sync_db, enterprise_uid, self.env.company.sync_pass,
-                # db, enterprise_uid, sync_pass,
                 'account.analytic.line', 'create',
                 [timesheet_data]
             )
