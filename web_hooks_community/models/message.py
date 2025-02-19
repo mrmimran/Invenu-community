@@ -106,10 +106,11 @@ class MailMessage(models.Model):
         elif payload['automation_type'] == 'from_write':
             msg = self.env['mail.message'].search([('source_id', '=', payload['source_id'])], limit=1)
             if msg:
-                msg.with_context(writing_automations=True).sudo().write({
+                msg.with_context(writing_automations=True).write({
                     "body": payload['body'],
                     "attachment_ids": attachments,
                 })
+
 
     # payload = json.dumps({
     #     "body": rec.body,
