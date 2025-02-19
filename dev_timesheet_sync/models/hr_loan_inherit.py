@@ -112,7 +112,7 @@ class HrLoan(models.Model):
         }
 
         # Call the method to sync the loan to the Enterprise Odoo instance
-        # self.sync_loan_to_enterprise(loan_data)
+        self.sync_loan_to_enterprise(loan_data)
         #
         # # Now sync all associated loan lines
         # for line in res.line_ids:
