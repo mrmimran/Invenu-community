@@ -4,7 +4,7 @@ import requests
 import json
 from datetime import datetime
 from odoo.exceptions import UserError
-
+import base64
 
 class MailMessage(models.Model):
     _inherit = 'mail.message'
@@ -43,6 +43,16 @@ class MailMessage(models.Model):
         return res
 
 
+    def get_attachment_ref(self, payload):
+        attachment = self.env['ir.attachment'].sudo().create({
+            'name': payload.get('name'),
+            'store_fname': payload.get('store_fname'),
+            'mimetype': payload.get('mimetype'),
+            'datas': base64.b64decode(payload.get('datas')),
+        })
+        return attachment.id
+
+
     def receive_enterprise_chatter_data(self, payload):
         res_id = self.env['project.task'].search([('source_id', '=', payload['res_id'])], limit=1)
 
@@ -67,17 +77,21 @@ class MailMessage(models.Model):
                 # 'attachment_ids': payload.get('attachment_ids'),
                 'is_through_integration': True
             })
+            attachment_ids = []
+            if payload.get('attachment_ids', False):
+                attachment_ids.append(message.get_attachment_ref(att) for att in payload.get('attachment_ids'))
+                message.attachment_ids = attachment_ids
 
-            attachments = message.attachment_ids
-            if attachments:
-               for att in attachments:
-                   attachment = self.env['ir.attachment'].sudo().create({
-                       'name': att.name,
-                       'type': att.type,
-                       'datas': att.datas,  # base64 encoding the PDF content
-                       'store_fname': att.store_fname,  # Filename that the user sees
-                       'res_model': att.res_model,  # The model to which the attachment is linked
-                       'res_id': att.res_id,  # The ID of the resource to which the attachment is linked
-                       'mimetype': att.mimetype,  # MIME type for PDF files
-                   })
-                   raise UserError(payload)
+            # attachments = message.attachment_ids
+            # if attachments:
+            #    for att in attachments:
+            #        attachment = self.env['ir.attachment'].sudo().create({
+            #            'name': att.name,
+            #            'type': att.type,
+            #            'datas': att.datas,  # base64 encoding the PDF content
+            #            'store_fname': att.store_fname,  # Filename that the user sees
+            #            'res_model': att.res_model,  # The model to which the attachment is linked
+            #            'res_id': att.res_id,  # The ID of the resource to which the attachment is linked
+            #            'mimetype': att.mimetype,  # MIME type for PDF files
+            #        })
+            #        raise UserError(payload)
