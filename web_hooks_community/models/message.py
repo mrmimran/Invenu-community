@@ -104,7 +104,7 @@ class MailMessage(models.Model):
                     'is_through_integration': True,
                 })
         elif payload['automation_type'] == 'from_write':
-            msg = self.env['mail.message'].search([('source_id', '=', payload['source_id'])], limit=1)
+            msg = self.env['mail.message'].search([('automation_source_id', '=', payload['id'])], limit=1)
             if msg:
                 msg.with_context(writing_automations=True).write({
                     "body": payload['body'],
