@@ -12,10 +12,24 @@ class MailMessage(models.Model):
     is_through_integration = fields.Boolean()
     automation_source_id = fields.Integer()
 
+    def prepare_attachment_data(self, attachment):
+        # Get binary data (either from DB or disk)
+        # binary_data = attachment.datas if attachment.datas else open(filestore_path, 'rb').read()
+        binary_data = attachment.datas
+        # Convert to Base64 for transmission
+        encoded_data = base64.b64encode(binary_data).decode('utf-8')
+        return {
+            "name": attachment.name,
+            "store_fname": attachment.name,
+            "mimetype": attachment.mimetype,
+            "datas": encoded_data
+        }
+
     def send_community_chatter_data(self):
         for rec in self:
             url = self.env.company.odoo_chatter_automation_url
             if url:
+                attachment_datas = [rec.prepare_attachment_data(att) for att in rec.attachment_ids]
                 res = self.env['project.task'].search([('id', '=', rec.res_id)])
                 payload = json.dumps({
                     'message_type': rec.message_type,
@@ -28,6 +42,7 @@ class MailMessage(models.Model):
                     "model": rec.model,
                     "body": rec.author_id.name + rec.body,
                     "automation_source_id": rec.id,
+                    "attachment_ids": attachment_datas,
                 })
                 # raise UserError(payload)
                 headers = {'Content-Type': 'application/json'}
