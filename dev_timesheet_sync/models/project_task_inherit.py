@@ -92,9 +92,10 @@ class ProjectTask(models.Model):
             'name': res.name,
             'project_id': res.project_id.source_id,  # Mapping the project ID
             # 'project_id': 27,  # Mapping the project ID
-            # 'community_res_users_ids': res.user_ids,  # Mapping the assigned user ID
+            'community_res_users_ids': res.user_ids,  # Mapping the assigned user ID
             'date_deadline': res.date_deadline,
             'description': res.description,
+            'allocated_hours': res.allocated_hours,
             # You can add other relevant fields for project.task here
         }
 
