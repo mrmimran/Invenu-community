@@ -88,7 +88,7 @@ class ProjectTask(models.Model):
 
         # Prepare the task data to pass to the sync method
         task_data = {
-            # 'source_id': res.id,  # Assuming source_id is the task ID in the Enterprise Odoo
+            'source_id': res.id,  # Assuming source_id is the task ID in the Enterprise Odoo
             'name': res.name,
             'project_id': res.project_id.source_id,  # Mapping the project ID
             # 'project_id': 27,  # Mapping the project ID
