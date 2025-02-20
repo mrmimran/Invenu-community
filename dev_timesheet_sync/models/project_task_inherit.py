@@ -103,3 +103,85 @@ class ProjectTask(models.Model):
         self.sync_task_to_enterprise(task_data)
 
         return res
+
+    def write(self, vals):
+        """
+        This method overrides the default write method to sync the task data to the Enterprise Odoo.
+        If the task exists in the Enterprise Odoo system, it updates it; otherwise, it creates a new task.
+        """
+        # Get the source_id from the vals or fallback to self.source_id
+        source_id = vals.get('source_id') or self.source_id
+
+        # Search for the existing task in Enterprise Odoo
+        task_id = self.search_task_in_enterprise(source_id)
+
+        if task_id:
+            # If the task exists, update it in the Enterprise Odoo system
+            return self.update_task_in_enterprise(task_id, vals)
+        else:
+            # If the task doesn't exist, create a new task in Enterprise Odoo
+            return self.create_task_in_enterprise(vals)
+
+    def search_task_in_enterprise(self, source_id):
+        """
+        Searches for an existing task in the Enterprise Odoo instance based on the given source_id.
+        Returns the task ID if found, or False if not found.
+        """
+        enterprise_models, enterprise_uid = self.connect_odoo()  # Connect to Enterprise Odoo
+
+        if not enterprise_models:
+            logging.error("Unable to connect to Enterprise Odoo.")
+            return False
+
+        try:
+            # Get the database and password for connection
+            sync_db = self.env.company.sync_db
+            sync_pass = self.env.company.sync_pass
+
+            # Search for the task by source_id
+            existing_task_ids = enterprise_models.execute_kw(
+                sync_db, enterprise_uid, sync_pass,
+                'project.task', 'search',
+                [[('source_id', '=', source_id)]]  # Searching by source_id
+            )
+
+            if existing_task_ids:
+                return existing_task_ids[0]  # Return the first task ID if found
+            else:
+                logging.info(f"No task found with source_id {source_id}")
+                return False
+
+        except Exception as e:
+            logging.error(f"Error searching for task in Enterprise Odoo: {e}")
+            return False
+
+    def update_task_in_enterprise(self, task_id, task_data):
+        """
+        Updates the task in the Enterprise Odoo instance with the given task data.
+        """
+        enterprise_models, enterprise_uid = self.connect_odoo()  # Connect to Enterprise Odoo
+
+        if not enterprise_models:
+            logging.error("Unable to connect to Enterprise Odoo.")
+            return False
+
+        try:
+            # Get the database and password for connection
+            sync_db = self.env.company.sync_db
+            sync_pass = self.env.company.sync_pass
+
+            # Update the existing task
+            enterprise_models.execute_kw(
+                sync_db, enterprise_uid, sync_pass,
+                'project.task', 'write',
+                [task_id, task_data]  # Update task with the new data
+            )
+
+            logging.info(f"Task with ID {task_id} successfully updated in Enterprise Odoo.")
+
+        except Exception as e:
+            logging.error(f"Error updating task in Enterprise Odoo: {e}")
+            return False
+
+        return True
+
