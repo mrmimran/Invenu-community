@@ -109,19 +109,23 @@ class ProjectTask(models.Model):
         This method overrides the default write method to sync the task data to the Enterprise Odoo.
         If the task exists in the Enterprise Odoo system, it updates it; otherwise, it creates a new task.
         """
+
+        res = super().write(vals)
         # Get the source_id from the vals or fallback to self.source_id
-        source_id = vals.get('id') or self.id
+        # source_id = vals.get('id') or self.id
+        source_id = 295
 
         # Search for the existing task in Enterprise Odoo
         task_id = self.search_task_in_enterprise(source_id)
 
         if task_id:
             # If the task exists, update it in the Enterprise Odoo system
-            return self.update_task_in_enterprise(task_id, vals)
+            self.update_task_in_enterprise(task_id, vals)
         else:
-            return
+            pass
             # If the task doesn't exist, create a new task in Enterprise Odoo
             # return self.create_task_in_enterprise(vals)
+        return res
 
     def search_task_in_enterprise(self, source_id):
         """
