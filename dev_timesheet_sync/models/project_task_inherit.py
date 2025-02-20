@@ -112,8 +112,8 @@ class ProjectTask(models.Model):
 
         res = super().write(vals)
         # Get the source_id from the vals or fallback to self.source_id
-        # source_id = vals.get('id') or self.id
-        source_id = 295
+        source_id = vals.get('id') or self.id
+        # source_id = 295
 
         # Search for the existing task in Enterprise Odoo
         task_id = self.search_task_in_enterprise(source_id)
