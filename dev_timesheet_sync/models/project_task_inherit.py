@@ -119,7 +119,7 @@ class ProjectTask(models.Model):
             # If the task exists, update it in the Enterprise Odoo system
             return self.update_task_in_enterprise(task_id, vals)
         else:
-            pass
+            return
             # If the task doesn't exist, create a new task in Enterprise Odoo
             # return self.create_task_in_enterprise(vals)
 
