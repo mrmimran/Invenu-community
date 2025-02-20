@@ -110,7 +110,7 @@ class ProjectTask(models.Model):
         If the task exists in the Enterprise Odoo system, it updates it; otherwise, it creates a new task.
         """
         # Get the source_id from the vals or fallback to self.source_id
-        source_id = vals.get('source_id') or self.source_id
+        source_id = vals.get('id') or self.id
 
         # Search for the existing task in Enterprise Odoo
         task_id = self.search_task_in_enterprise(source_id)
