@@ -19,14 +19,14 @@ class AccountAnalyticLine(models.Model):
         All connection parameters for the Enterprise database are fetched from the Odoo instance.
         """
 
-        sync_url = self.env.company.sync_url
-        # sync_url = 'https://art-ethereal-advertising-company-staging-main-18283947.dev.odoo.com'
-        sync_db = self.env.company.sync_db
-        # sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
-        sync_login = self.env.company.sync_login
-        # sync_login = 'admin@gmail.com'
-        sync_pass = self.env.company.sync_pass
-        # sync_pass = 'admin'
+        # sync_url = self.env.company.sync_url
+        sync_url = 'https://art-ethereal-advertising-company-staging-main-18283947.dev.odoo.com'
+        # sync_db = self.env.company.sync_db
+        sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
+        # sync_login = self.env.company.sync_login
+        sync_login = 'admin@gmail.com'
+        # sync_pass = self.env.company.sync_pass
+        sync_pass = 'admin'
 
 
         enterprise_config = {
@@ -67,8 +67,8 @@ class AccountAnalyticLine(models.Model):
             sync_pass = 'admin'
 
             enterprise_timesheet_id = enterprise_models.execute_kw(
+                sync_db, enterprise_uid, sync_pass,
                 # self.env.company.sync_db, enterprise_uid, self.env.company.sync_pass,
-                self.env.company.sync_db, enterprise_uid, self.env.company.sync_pass,
                 'account.analytic.line', 'create',
                 [timesheet_data]
             )
