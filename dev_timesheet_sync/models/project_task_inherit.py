@@ -72,8 +72,8 @@ class ProjectTask(models.Model):
                 # 'source_id': self.id,  # Assuming source_id is the task ID in the Enterprise Odoo
                 'source_id': self.id,  # Assuming source_id is the task ID in the Enterprise Odoo
                 "name": self.name,
-                'project_id': self.project_id.source_id,
-                # 'project_id': 27,
+                # 'project_id': self.project_id.source_id,
+                'project_id': 27,
                 'date_deadline': self.date_deadline,
                 'description': self.description,
                 'allocated_hours': self.allocated_hours,
