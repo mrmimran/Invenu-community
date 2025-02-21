@@ -66,8 +66,12 @@ class ProjectTask(models.Model):
             # sync_pass = self.env.company.sync_pass
             sync_pass = 'admin'
             task_data = {
+                'source_id': self.id,  # Assuming source_id is the task ID in the Enterprise Odoo
                 "name": self.name,
-                'project_id': 27
+                'project_id': self.project_id.source_id,
+                'date_deadline': self.date_deadline,
+                'description': self.description,
+                'allocated_hours': self.allocated_hours,
             }
             enterprise_task_id = enterprise_models.execute_kw(
                 sync_db, enterprise_uid, sync_pass,
