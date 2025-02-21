@@ -64,33 +64,21 @@ class ProjectTask(models.Model):
 
             # sync_pass = self.env.company.sync_pass
             sync_pass = 'admin'
+            user_ids = self.user_ids.ids
+            community_res_users_ids = self.search_user_in_community(user_ids)
+            formatted_user_ids = [(6, 0, community_res_users_ids)]  # 6 means "replace with these IDs"
+
             task_data = {
+                # 'source_id': self.id,  # Assuming source_id is the task ID in the Enterprise Odoo
                 'source_id': self.id,  # Assuming source_id is the task ID in the Enterprise Odoo
                 "name": self.name,
                 'project_id': self.project_id.source_id,
+                # 'project_id': 27,
                 'date_deadline': self.date_deadline,
                 'description': self.description,
                 'allocated_hours': self.allocated_hours,
+                'community_res_users_ids': formatted_user_ids,
             }
-
-            # Create timesheet data (one2many) based on employee's timesheets
-            # timesheet_data = []
-            # for timesheet in self.timesheet_ids:  # Assuming employee_id has the one2many field
-            #     timesheet_data.append({
-            #         # 'timesheet_id': timesheet.id,  # Assuming you have the timesheet ID to update
-            #         'date': timesheet.date,
-            #         'unit_amount': timesheet.unit_amount,  # The hours worked
-            #         # 'employee_id': self.employee_id.source_id,  # Assuming each timesheet is linked to the employee
-            #         'employee_id': 72,  # Assuming each timesheet is linked to the employee
-            #         # 'employee_id': self.employee_id.source_id,  # Assuming each timesheet is linked to the employee
-            #         'task_id': 134,  # Link the task to the timesheet
-            #         # 'task_id': self.id,  # Link the task to the timesheet
-            #     })
-            #
-            # # Include the timesheet data in the task data if needed (depending on your model requirements)
-            # task_data['timesheet_ids'] = [(0, 0, ts) for ts in timesheet_data]  # Creating one2many records
-
-            return task_data
 
             source_id = self.id
             #source_id = 295
@@ -112,31 +100,31 @@ class ProjectTask(models.Model):
         return True
 
     @api.model
-    def create(self, values):
-        """
-        This method overrides the default create method to sync the task data to the Enterprise Odoo.
-        """
-        # Call the super method to create the record
-        res = super(ProjectTask, self).create(values)
-
-        # Prepare the task data to pass to the sync method
-        task_data = {
-            'source_id': res.id,  # Assuming source_id is the task ID in the Enterprise Odoo
-            'name': res.name,
-            # 'project_id': res.project_id.source_id,  # Mapping the project ID
-            # 'project_id': 27,  # Mapping the project ID
-            # 'community_res_users_ids': res.user_ids,  # Mapping the assigned user ID
-            'date_deadline': res.date_deadline,
-            'description': res.description,
-            'allocated_hours': res.allocated_hours,
-            # You can add other relevant fields for project.task here
-        }
-
-        # Call the method to sync the task to Enterprise Odoo
-        # self.sync_task_to_enterprise(task_data)
-        # res.sync_task_to_enterprise(task_data)
-
-        return res
+    # def create(self, values):
+    #     """
+    #     This method overrides the default create method to sync the task data to the Enterprise Odoo.
+    #     """
+    #     # Call the super method to create the record
+    #     res = super(ProjectTask, self).create(values)
+    #
+    #     # Prepare the task data to pass to the sync method
+    #     task_data = {
+    #         'source_id': res.id,  # Assuming source_id is the task ID in the Enterprise Odoo
+    #         'name': res.name,
+    #         # 'project_id': res.project_id.source_id,  # Mapping the project ID
+    #         # 'project_id': 27,  # Mapping the project ID
+    #         # 'community_res_users_ids': res.user_ids,  # Mapping the assigned user ID
+    #         'date_deadline': res.date_deadline,
+    #         'description': res.description,
+    #         'allocated_hours': res.allocated_hours,
+    #         # You can add other relevant fields for project.task here
+    #     }
+    #
+    #     # Call the method to sync the task to Enterprise Odoo
+    #     # self.sync_task_to_enterprise(task_data)
+    #     # res.sync_task_to_enterprise(task_data)
+    #
+    #     return res
 
     # def write(self, vals):
     #     """
@@ -176,8 +164,14 @@ class ProjectTask(models.Model):
 
         try:
             # Get the database and password for connection
-            sync_db = self.env.company.sync_db
-            sync_pass = self.env.company.sync_pass
+            # sync_db = self.env.company.sync_db
+            # sync_pass = self.env.company.sync_pass
+
+            sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
+            # sync_db = self.env.company.sync_db
+
+            # sync_pass = self.env.company.sync_pass
+            sync_pass = 'admin'
 
             # Search for the task by source_id
             existing_task_ids = enterprise_models.execute_kw(
@@ -196,6 +190,39 @@ class ProjectTask(models.Model):
             logging.error(f"Error searching for task in Enterprise Odoo: {e}")
             return False
 
+    def search_user_in_community(self, source_id):
+        """
+        Searches for an existing user in the Community Odoo instance based on the given user_id.
+        Returns the user ID if found, or False if not found.
+        """
+        enterprise_models, enterprise_uid = self.connect_odoo()  # Connect to Odoo
+
+        if not enterprise_models:
+            logging.error("Unable to connect to Odoo.")
+            return False
+
+        try:
+            # Get the database and password for connection
+            sync_db = 'art-ethereal-advertising-company-staging-main-18283947'  # Example database
+            sync_pass = 'admin'  # Example password
+
+            # Search for the user by user_id
+            existing_user_ids = enterprise_models.execute_kw(
+                sync_db, enterprise_uid, sync_pass,
+                'community.res.users', 'search',
+                [[('source_id', 'in', source_id)]]  # Searching by user_id
+            )
+
+            if existing_user_ids:
+                return existing_user_ids  # Return the first user ID if found
+            else:
+                logging.info(f"No user found with user_id {source_id}")
+                return False
+
+        except Exception as e:
+            logging.error(f"Error searching for user in Odoo: {e}")
+            return False
+
     def update_task_in_enterprise(self, task_id, task_data):
         """
         Updates the task in the Enterprise Odoo instance with the given task data.
@@ -208,8 +235,13 @@ class ProjectTask(models.Model):
 
         try:
             # Get the database and password for connection
-            sync_db = self.env.company.sync_db
-            sync_pass = self.env.company.sync_pass
+            # sync_db = self.env.company.sync_db
+            # sync_pass = self.env.company.sync_pass
+            sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
+            # sync_db = self.env.company.sync_db
+
+            # sync_pass = self.env.company.sync_pass
+            sync_pass = 'admin'
 
             # Update the existing task
             enterprise_models.execute_kw(
@@ -225,4 +257,152 @@ class ProjectTask(models.Model):
             return False
 
         return True
+
+    def synchronize_timesheet_data(self):
+        """
+        Calls the search_timesheet_in_enterprise method to either retrieve existing timesheet data
+        or prepare new timesheet data for synchronization.
+        """
+        # Call the search_timesheet_in_enterprise method to get existing or prepare new timesheet data
+        # prepared_data = self.search_timesheet_in_enterprise(source_id)
+        prepared_data = self.prepare_timesheet_data()
+
+        if not prepared_data:
+            logging.error("No timesheet data available for synchronization.")
+            return False
+
+        # Now you can use the prepared data, e.g., send it to Odoo for synchronization
+        for timesheet_entry in prepared_data:
+            # Call the search_timesheet_in_enterprise method for each timesheet_entry
+            # passing the task_id (source_id) of the timesheet
+            timesheet_id = timesheet_entry.get('task_id')  # Adjust if needed based on the structure of timesheet_entry
+            source_id = timesheet_entry['source_id']
+
+            # Call search_timesheet_in_enterprise for each timesheet entry
+            existing_timesheet = self.search_timesheet_in_enterprise(source_id)
+
+            if existing_timesheet:
+                # If the timesheet is found, update the existing timesheet in Odoo
+                logging.info(f"Synchronizing existing timesheet for task {timesheet_entry['task_id']}")
+
+                # You can modify this logic to update specific fields in the existing timesheet
+                enterprise_models, enterprise_uid = self.connect_odoo()
+                sync_db = 'art-ethereal-advertising-company-staging-main-18283947'  # Example database
+                sync_pass = 'admin'  # Example password
+
+                # Ensure the existing_timesheet is a list of IDs and extract the first ID
+                timesheet_id = existing_timesheet[0] if isinstance(existing_timesheet, list) else existing_timesheet
+
+                # Now perform the update operation
+                enterprise_models.execute_kw(
+                    sync_db, enterprise_uid, sync_pass,
+                    'account.analytic.line', 'write',
+                    [[timesheet_id], {
+                        'unit_amount': timesheet_entry.get('unit_amount'),  # Update hours worked
+                        'name': timesheet_entry.get('name'),  # Update task description
+                        'date': timesheet_entry.get('date')  # Update the date if necessary
+                    }]
+                )
+            else:
+                # If no timesheet is found, create a new timesheet in Odoo
+                logging.info(
+                    f"No existing timesheet found for task {timesheet_entry['task_id']}. Creating new timesheet.")
+
+                # Create new timesheet entry
+                enterprise_models, enterprise_uid = self.connect_odoo()
+                sync_db = 'art-ethereal-advertising-company-staging-main-18283947'  # Example database
+                sync_pass = 'admin'  # Example password
+
+                # Prepare data for creating a new timesheet
+                new_timesheet_data = {
+
+                    'project_id': timesheet_entry['project_id'],  # Example: Pass task_id (source_id)
+                    'task_id': timesheet_entry['task_id'],  # Example: Pass task_id (source_id)
+                    'employee_id': timesheet_entry['employee_id'],  # Employee who logged the time
+                    'date': timesheet_entry['date'],  # Date of the timesheet entry
+                    'unit_amount': timesheet_entry['unit_amount'],  # Hours worked
+                    'name': timesheet_entry['name'],  # Description of the work done
+                    'source_id': timesheet_entry['source_id'],  # Description of the work done
+                }
+
+                # Create a new timesheet entry in Odoo
+                new_timesheet_id = enterprise_models.execute_kw(
+                    sync_db, enterprise_uid, sync_pass,
+                    'account.analytic.line', 'create',
+                    [new_timesheet_data]
+                )
+                logging.info(f"New timesheet created with ID {new_timesheet_id}.")
+
+            return prepared_data  # Return the prepared data, which might have been synchronized or updated
+
+
+
+
+        # You could also return the prepared data if needed
+        return prepared_data
+
+    def prepare_timesheet_data(self):
+        """
+        Prepares the timesheet data for synchronization with Enterprise Odoo.
+        """
+        # Prepare the timesheet data based on the current task and timesheet entry
+        timesheet_ids = self.timesheet_ids
+        timesheet_data_list = []  # To hold the prepared timesheet data
+        source_id = self.source_id
+        task_id = self.search_task_in_enterprise(source_id)
+
+        for timesheet_line in timesheet_ids:
+            # Assuming each timesheet_line is an object containing the necessary data
+
+            timesheet_data = {
+                # 'task_id': self.source_id,  # Assuming source_id is the task ID in Enterprise Odoo
+                'project_id': self.project_id.source_id,
+                # 'project_id': 27,
+                'task_id': task_id,  # Assuming source_id is the task ID in Enterprise Odoo
+                # 'task_id': 378,  # Assuming source_id is the task ID in Enterprise Odoo
+                # 'task_id': self.id,  # Assuming source_id is the task ID in Enterprise Odoo
+                'employee_id': timesheet_line.employee_id.source_id,  # Employee who logged the time
+                # 'employee_id': 72,  # Employee who logged the time
+                'date': timesheet_line.date,  # Date of the timesheet entry
+                'unit_amount': timesheet_line.unit_amount,  # Hours worked
+                'name': timesheet_line.name,  # Description of the work done
+                'source_id': self.id
+            }
+            timesheet_data_list.append(timesheet_data)  # Add the data to the list
+
+        return timesheet_data_list  # Return the list of timesheet data
+
+    def search_timesheet_in_enterprise(self, source_id):
+        """
+        Searches for existing timesheet entries in the Enterprise Odoo instance based on the given source_id (task_id).
+        If the timesheet exists, returns the existing timesheet entries.
+        If not, prepares new timesheet data by calling the prepare_timesheet_data method.
+        """
+        enterprise_models, enterprise_uid = self.connect_odoo()  # Connect to Odoo
+
+        if not enterprise_models:
+            logging.error("Unable to connect to Odoo.")
+            return False
+
+        try:
+            # Get the database and password for connection
+            sync_db = 'art-ethereal-advertising-company-staging-main-18283947'  # Example database
+            sync_pass = 'admin'  # Example password
+
+            # Search for the timesheet entries by task_id (source_id) in the Enterprise Odoo instance
+            existing_timesheet_ids = enterprise_models.execute_kw(
+                sync_db, enterprise_uid, sync_pass,
+                'account.analytic.line', 'search',
+                [[('source_id', '=', source_id)]]  # Searching by task_id (source_id)
+            )
+
+            # If timesheets are found, return the existing records
+            logging.info(f"Found existing timesheet entries for task_id {source_id}")
+            return existing_timesheet_ids  # You could also fetch more details if needed
+
+        except Exception as e:
+            logging.error(f"Error searching for timesheet in Enterprise Odoo: {e}")
+            return False
+
+
 
