@@ -12,18 +12,18 @@ class ProjectTask(models.Model):
         """
 
         # sync_url = self.env.company.sync_url
-        # sync_url = 'https://art-ethereal-advertising-company-staging-main-18283947.dev.odoo.com'
-        # # sync_db = self.env.company.sync_db
-        # sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
+        sync_url = 'https://art-ethereal-advertising-company-staging-main-18283947.dev.odoo.com'
+        # sync_db = self.env.company.sync_db
+        sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
         # # sync_login = self.env.company.sync_login
-        # sync_login = 'admin@gmail.com'
+        sync_login = 'admin@gmail.com'
         # # sync_pass = self.env.company.sync_pass
-        # sync_pass = 'admin'
+        sync_pass = 'admin'
 
-        sync_url = self.env.company.sync_url
-        sync_db = self.env.company.sync_db
-        sync_login = self.env.company.sync_login
-        sync_pass = self.env.company.sync_pass
+        # sync_url = self.env.company.sync_url
+        # sync_db = self.env.company.sync_db
+        # sync_login = self.env.company.sync_login
+        # sync_pass = self.env.company.sync_pass
 
         enterprise_config = {
             'url': sync_url,
@@ -47,7 +47,8 @@ class ProjectTask(models.Model):
             logging.error(f"Error connecting to Enterprise Odoo: {e}")
             return None, None
 
-    def sync_task_to_enterprise(self, task_data):
+    # def sync_task_to_enterprise(self, task_data):
+    def sync_task_to_enterprise(self):
         """
         Syncs task data to the Enterprise Odoo instance.
         """
@@ -59,12 +60,14 @@ class ProjectTask(models.Model):
 
         # Create or update task in the Enterprise Odoo instance
         try:
-            # sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
-            sync_db = self.env.company.sync_db
+            sync_db = 'art-ethereal-advertising-company-staging-main-18283947'
+            # sync_db = self.env.company.sync_db
 
-            sync_pass = self.env.company.sync_pass
-            # sync_pass = 'admin'
-
+            # sync_pass = self.env.company.sync_pass
+            sync_pass = 'admin'
+            task_data = {
+                "name": self.name,
+            }
             enterprise_task_id = enterprise_models.execute_kw(
                 sync_db, enterprise_uid, sync_pass,
                 'project.task', 'create',  # Create task in 'project.task' model
@@ -90,7 +93,7 @@ class ProjectTask(models.Model):
         task_data = {
             'source_id': res.id,  # Assuming source_id is the task ID in the Enterprise Odoo
             'name': res.name,
-            'project_id': res.project_id.source_id,  # Mapping the project ID
+            # 'project_id': res.project_id.source_id,  # Mapping the project ID
             # 'project_id': 27,  # Mapping the project ID
             # 'community_res_users_ids': res.user_ids,  # Mapping the assigned user ID
             'date_deadline': res.date_deadline,
@@ -100,32 +103,35 @@ class ProjectTask(models.Model):
         }
 
         # Call the method to sync the task to Enterprise Odoo
-        self.sync_task_to_enterprise(task_data)
+        # self.sync_task_to_enterprise(task_data)
+        # res.sync_task_to_enterprise(task_data)
 
         return res
 
-    def write(self, vals):
-        """
-        This method overrides the default write method to sync the task data to the Enterprise Odoo.
-        If the task exists in the Enterprise Odoo system, it updates it; otherwise, it creates a new task.
-        """
-
-        res = super().write(vals)
-        # Get the source_id from the vals or fallback to self.source_id
-        source_id = vals.get('id') or self.id
-        # source_id = 295
-
-        # Search for the existing task in Enterprise Odoo
-        task_id = self.search_task_in_enterprise(source_id)
-
-        if task_id:
-            # If the task exists, update it in the Enterprise Odoo system
-            self.update_task_in_enterprise(task_id, vals)
-        else:
-            pass
-            # If the task doesn't exist, create a new task in Enterprise Odoo
-            # return self.create_task_in_enterprise(vals)
-        return res
+    # def write(self, vals):
+    #     """
+    #     This method overrides the default write method to sync the task data to the Enterprise Odoo.
+    #     If the task exists in the Enterprise Odoo system, it updates it; otherwise, it creates a new task.
+    #     """
+    #
+    #     res = super().write(vals)
+    #     # Get the source_id from the vals or fallback to self.source_id
+    #     source_id = vals.get('id') or self.id
+    #     # source_id = 295
+    #
+    #     # Search for the existing task in Enterprise Odoo
+    #     # task_id = self.search_task_in_enterprise(source_id)
+    #
+    #     # if task_id:
+    #     if source_id:
+    #         pass
+    #         # If the task exists, update it in the Enterprise Odoo system
+    #         # self.update_task_in_enterprise(task_id, vals)
+    #     else:
+    #         pass
+    #         # If the task doesn't exist, create a new task in Enterprise Odoo
+    #         # return self.create_task_in_enterprise(vals)
+    #     return res
 
     def search_task_in_enterprise(self, source_id):
         """
