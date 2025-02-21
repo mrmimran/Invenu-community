@@ -74,19 +74,21 @@ class ProjectTask(models.Model):
             }
 
             # Create timesheet data (one2many) based on employee's timesheets
-            timesheet_data = []
-            for timesheet in self.timesheet_ids:  # Assuming employee_id has the one2many field
-                timesheet_data.append({
-                    'timesheet_id': timesheet.id,  # Assuming you have the timesheet ID to update
-                    'date': timesheet.date,
-                    'unit_amount': timesheet.unit_amount,  # The hours worked
-                    # 'employee_id': self.employee_id.source_id,  # Assuming each timesheet is linked to the employee
-                    'employee_id': self.employee_id.source_id,  # Assuming each timesheet is linked to the employee
-                    'task_id': self.id,  # Link the task to the timesheet
-                })
-
-            # Include the timesheet data in the task data if needed (depending on your model requirements)
-            task_data['timesheet_ids'] = [(0, 0, ts) for ts in timesheet_data]  # Creating one2many records
+            # timesheet_data = []
+            # for timesheet in self.timesheet_ids:  # Assuming employee_id has the one2many field
+            #     timesheet_data.append({
+            #         # 'timesheet_id': timesheet.id,  # Assuming you have the timesheet ID to update
+            #         'date': timesheet.date,
+            #         'unit_amount': timesheet.unit_amount,  # The hours worked
+            #         # 'employee_id': self.employee_id.source_id,  # Assuming each timesheet is linked to the employee
+            #         'employee_id': 72,  # Assuming each timesheet is linked to the employee
+            #         # 'employee_id': self.employee_id.source_id,  # Assuming each timesheet is linked to the employee
+            #         'task_id': 134,  # Link the task to the timesheet
+            #         # 'task_id': self.id,  # Link the task to the timesheet
+            #     })
+            #
+            # # Include the timesheet data in the task data if needed (depending on your model requirements)
+            # task_data['timesheet_ids'] = [(0, 0, ts) for ts in timesheet_data]  # Creating one2many records
 
             return task_data
 
