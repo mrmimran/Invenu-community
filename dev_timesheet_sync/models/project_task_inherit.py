@@ -73,11 +73,21 @@ class ProjectTask(models.Model):
                 'description': self.description,
                 'allocated_hours': self.allocated_hours,
             }
-            enterprise_task_id = enterprise_models.execute_kw(
-                sync_db, enterprise_uid, sync_pass,
-                'project.task', 'create',  # Create task in 'project.task' model
-                [task_data]
-            )
+
+            source_id = self.id
+            #     # source_id = 295
+            #
+            #     # Search for the existing task in Enterprise Odoo
+            task_id = self.search_task_in_enterprise(source_id)
+            if not task_id:
+                enterprise_task_id = enterprise_models.execute_kw(
+                    sync_db, enterprise_uid, sync_pass,
+                    'project.task', 'create',  # Create task in 'project.task' model
+                    [task_data]
+                )
+            else:
+                self.update_task_in_enterprise(task_id, task_data)
+
 
             logging.info(f"Task successfully created in Enterprise Odoo with ID: {enterprise_task_id}")
         except Exception as e:
