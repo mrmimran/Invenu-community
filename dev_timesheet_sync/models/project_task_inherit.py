@@ -67,6 +67,7 @@ class ProjectTask(models.Model):
             sync_pass = 'admin'
             task_data = {
                 "name": self.name,
+                'project_id': 27
             }
             enterprise_task_id = enterprise_models.execute_kw(
                 sync_db, enterprise_uid, sync_pass,
