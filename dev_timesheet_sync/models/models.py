@@ -102,7 +102,7 @@ class AccountAnalyticLine(models.Model):
         }
 
         # Call the method to sync the timesheet to the Enterprise Odoo instance
-        # self.sync_timesheets_to_enterprise(timesheet_data)
+        self.sync_timesheets_to_enterprise(timesheet_data)
 
         return res
 
