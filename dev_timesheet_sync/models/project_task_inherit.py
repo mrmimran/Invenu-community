@@ -30,7 +30,7 @@ class ProjectTask(models.Model):
             'db': sync_db,
             'username': sync_login,
             'password': sync_pass
-        }@
+        }
         try:
             # Connect to the Enterprise Odoo using XML-RPC
             common = xmlrpc.client.ServerProxy(f"{enterprise_config['url']}/xmlrpc/2/common")
