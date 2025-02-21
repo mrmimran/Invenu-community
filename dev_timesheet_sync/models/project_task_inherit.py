@@ -30,8 +30,7 @@ class ProjectTask(models.Model):
             'db': sync_db,
             'username': sync_login,
             'password': sync_pass
-        }
-
+        }@
         try:
             # Connect to the Enterprise Odoo using XML-RPC
             common = xmlrpc.client.ServerProxy(f"{enterprise_config['url']}/xmlrpc/2/common")
@@ -75,9 +74,8 @@ class ProjectTask(models.Model):
             }
 
             source_id = self.id
-            #     # source_id = 295
-            #
-            #     # Search for the existing task in Enterprise Odoo
+            #source_id = 295
+            # Search for the existing task in Enterprise Odoo
             task_id = self.search_task_in_enterprise(source_id)
             if not task_id:
                 enterprise_task_id = enterprise_models.execute_kw(
@@ -87,8 +85,6 @@ class ProjectTask(models.Model):
                 )
             else:
                 self.update_task_in_enterprise(task_id, task_data)
-
-
             logging.info(f"Task successfully created in Enterprise Odoo with ID: {enterprise_task_id}")
         except Exception as e:
             logging.error(f"Error creating task in Enterprise Odoo: {e}")
